@@ -146,3 +146,4 @@ class TAEngine:
             "breakouts": [],
             "key_levels": {"ema20": round(ema20, 5), "ema50": round(ema50, 5), "ema200": round(ema200, 5), "sma20": round(sma20, 5), "upper_bb": round(bb_upper, 5), "lower_bb": round(bb_lower, 5)},
         }
+   
