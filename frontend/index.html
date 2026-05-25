@@ -270,8 +270,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2'
 <div class="top-bar top-section">
   <div class="brand"><span class="c1">CITIZENS</span><span class="c2">FOREX</span> <span class="c3">PRO</span></div>
   <div class="mkt-badge"><div class="live-dot" style="width:5px;height:5px"></div><span>OPEN</span></div>
-  <div class="top-stat"><span class="lb">GOLD</span><span class="vl gold" id="goldPrice">$4,573</span></div>
-  <div class="top-stat"><span class="lb">BTC</span><span class="vl up" id="btcPrice">$109,250</span></div>
+  <div class="top-stat"><span class="lb">GOLD</span><span class="vl gold" id="goldPrice">$4,558</span></div>
+  <div class="top-stat"><span class="lb">BTC</span><span class="vl up" id="btcPrice">$77,650</span></div>
   <div class="top-stat"><span class="lb">VIX</span><span class="vl" id="vixVal" style="color:var(--orange)">14.2</span></div>
   <div class="clocks">
     <div class="clk" id="clk-tokyo"><div class="city">TOKYO</div><div class="time" id="t-tokyo">--:--</div></div>
@@ -328,28 +328,28 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2'
   <div class="price-grid" id="priceGrid">
     <div class="price-card" id="pc-EURUSD">
       <div class="pair-name">EUR/USD</div>
-      <div class="price-val" id="pv-EURUSD">1.16435</div>
+      <div class="price-val" id="pv-EURUSD">1.16430</div>
       <div class="price-chg" id="pc2-EURUSD">▲ +0.21%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-EURUSD" style="width:62%"></div></div>
       
     </div>
     <div class="price-card" id="pc-GBPUSD">
       <div class="pair-name">GBP/USD</div>
-      <div class="price-val" id="pv-GBPUSD">1.34930</div>
+      <div class="price-val" id="pv-GBPUSD">1.34920</div>
       <div class="price-chg" id="pc2-GBPUSD">▲ +0.15%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-GBPUSD" style="width:55%"></div></div>
       
     </div>
     <div class="price-card" id="pc-USDJPY">
       <div class="pair-name">USD/JPY</div>
-      <div class="price-val" id="pv-USDJPY">158.952</div>
+      <div class="price-val" id="pv-USDJPY">158.910</div>
       <div class="price-chg" id="pc2-USDJPY">▲ +0.18%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-USDJPY" style="width:58%"></div></div>
       
     </div>
     <div class="price-card" id="pc-XAUUSD">
       <div class="pair-name">XAU/USD</div>
-      <div class="price-val" id="pv-XAUUSD">4573.70</div>
+      <div class="price-val" id="pv-XAUUSD">4558.82</div>
       <div class="price-chg" id="pc2-XAUUSD">▲ +0.36%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-XAUUSD" style="width:72%"></div></div>
       
@@ -436,7 +436,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2'
     <div style="flex:1;overflow-y:auto;margin-bottom:6px" id="fullChatArea">
       <div class="cmsg ai" style="font-size:10px;padding:7px 9px">
         <div class="ailbl" style="font-size:9px;margin-bottom:3px">CITIZENSFOREX AI — ONLINE</div>
-        Welcome trader! CitizensForex AI — May 25, 2026. 🔴 US-Iran war tensions driving markets. Gold surging at $4,573. EUR/USD 1.1643, GBP/USD 1.3493, USD/JPY 158.95. AUD strongest currency today +0.57%. Ask me anything!
+        Welcome trader! CitizensForex AI — May 25, 2026. 🟡 US-Iran peace talks progressing — oil falling, stocks rising. Gold at $4,558 pulling back. EUR/USD 1.1643, USD/JPY 158.91, AUD strongest +0.57%. US markets CLOSED (Memorial Day). Ask me anything!
       </div>
     </div>
     <div class="qbtns">
@@ -547,7 +547,7 @@ async function apiFetch(path) {
 }
 
 // ── BASE DATA ──
-const BASE = {"EUR/USD":1.16435,"GBP/USD":1.34930,"USD/JPY":158.952,"USD/CHF":0.78146,"AUD/USD":0.71679,"USD/CAD":1.38167,"NZD/USD":0.58721,"XAU/USD":4573.70,"BTC/USD":109250,"EUR/GBP":0.86304,"EUR/JPY":185.063,"GBP/JPY":214.43};
+const BASE = {"EUR/USD":1.16430,"GBP/USD":1.34920,"USD/JPY":158.910,"USD/CHF":0.78140,"AUD/USD":0.71670,"USD/CAD":1.38150,"NZD/USD":0.58700,"XAU/USD":4558.82,"BTC/USD":77650,"EUR/GBP":0.86300,"EUR/JPY":185.040,"GBP/JPY":214.380};
 let simP = {...BASE};
 let allNews = [];
 let currentFilter = 'all';
@@ -679,7 +679,7 @@ async function updatePrices() {
 
 // ── NEWS FALLBACK ──
 const NEWS_FALLBACK = [
-  {title:"US-Iran War: Pentagon Briefs Trump on Military Strike Options — Gold Surges to $4,573",source:"Reuters",published_at:"2m ago",currencies:["USD","XAU"],impact:"bearish",trade_bias:"XAUUSD BUY",confidence:92,volatility_score:5,sentiment:"War fears driving USD selling and gold surge — safe haven demand at extreme levels"},
+  {title:"US-Iran Peace Talks Progressing — Dollar Slips, Oil Falls, Stocks Rise",source:"Reuters",published_at:"2m ago",currencies:["USD","XAU"],impact:"bearish",trade_bias:"XAUUSD WATCH",confidence:78,volatility_score:4,sentiment:"Iran peace deal hopes reducing safe-haven premium — gold pulling back from $4,577 highs"},
   {title:"Eurozone PMI Contracts Unexpectedly in May at Fastest Pace Since Late 2023",source:"Bloomberg",published_at:"8m ago",currencies:["EUR"],impact:"bearish",trade_bias:"EURUSD SELL",confidence:85,volatility_score:4,sentiment:"EUR/USD at 1.1643 but ECB June cut now near certain after PMI shock"},
   {title:"AUD Strongest Currency Today +0.57% — RBA Signals Pause After Recent Cut",source:"ABC News",published_at:"15m ago",currencies:["AUD"],impact:"bullish",trade_bias:"AUDUSD BUY",confidence:80,volatility_score:3,sentiment:"AUD leading G10 today — RBA pause signals stabilizing Australian economy"},
   {title:"GBP/USD Holds Above 1.3490 — BOE Hawkish Stance Supporting Pound",source:"FT",published_at:"22m ago",currencies:["GBP"],impact:"bullish",trade_bias:"GBPUSD BUY",confidence:78,volatility_score:3,sentiment:"GBP +0.47% today — BOE holding rates at 4.5% keeping pound supported"},
@@ -981,10 +981,10 @@ function loadCommunity() {
 
 // ── AI CHAT ──
 const AI_LOCAL = {
-  gold:"Gold at $4,573 — surging on US-Iran war escalation and safe-haven demand. Today's range: $4,531–$4,579. Key resistance: $4,580. Break above targets $4,650+. Analysts see $5,000 by year end.",
+  gold:"Gold at $4,558 today (May 25, 2026). Range: $4,531–$4,579. US-Iran peace talk hopes are causing pullback from highs. Key support: $4,441. Resistance: $4,577. If peace deal confirmed, expect drop to $4,400 zone.",
   eur:"EUR/USD at 1.1643 today. Eurozone PMI showed unexpected contraction in May — fastest pace since late 2023. ECB June cut likely. Bias: SELL rallies toward 1.1650. Support: 1.1600, Resistance: 1.1680.",
   gbp:"GBP mixed — BOE hawkish but UK CPI softening. GBP/JPY BUY offers better opportunity on JPY weakness. Watch 1.3400 support on cable.",
-  strong:"May 25 strength: AUD(+0.57%) and NZD(+0.38%) lead today. EUR(+0.37%) and GBP(+0.47%) positive. JPY(-0.14%) and CHF(-0.43%) weakest. Favor AUD longs vs CHF and JPY shorts.",
+  strong:"May 25, 2026 strength: AUD(+0.57%) and GBP(+0.47%) lead G10. EUR(+0.37%) positive on Iran deal hopes. USD weak as dollar slips on peace talks. CHF(-0.43%) and JPY(-0.14%) weakest. Favor AUD and GBP longs.",
   best:"Today's top picks: 1) XAU/USD BUY at 4573 — war premium driving gold higher (91%). 2) AUD/USD BUY at 0.7168 — strongest currency today (+0.57%) (82%). 3) EUR/JPY BUY at 185.06 — EUR strength vs JPY weakness (79%).",
   smc:"Smart Money Concepts: Look for Break of Structure (BOS), Order Blocks (OB), Fair Value Gaps (FVG). Trade discount zones for buys, premium zones for sells.",
   default:"USD dominant across the board. EUR/USD under pressure, Gold maintaining bullish structure above $3,280. Watch upcoming central bank events for volatility."

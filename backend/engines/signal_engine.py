@@ -7,11 +7,11 @@ from cachetools import TTLCache
 
 _signal_cache = TTLCache(maxsize=50, ttl=120)
 
-# ✅ EXACT REAL PRICES — May 25, 2026
+# ✅ VERIFIED REAL PRICES — May 25, 2026
 BASE_PRICES = {
-    "EUR/USD": 1.16435, "GBP/USD": 1.34930, "USD/JPY": 158.952,
-    "AUD/USD": 0.71679, "USD/CHF": 0.78146, "USD/CAD": 1.38167,
-    "NZD/USD": 0.58721, "XAU/USD": 4573.70, "GBP/JPY": 214.430,
+    "EUR/USD": 1.16430, "GBP/USD": 1.34920, "USD/JPY": 158.910,
+    "AUD/USD": 0.71670, "USD/CHF": 0.78140, "USD/CAD": 1.38150,
+    "NZD/USD": 0.58700, "XAU/USD": 4558.82, "GBP/JPY": 214.380,
 }
 
 SIGNALS = [

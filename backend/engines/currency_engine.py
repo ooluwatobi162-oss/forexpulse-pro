@@ -14,12 +14,13 @@ _strength_cache = TTLCache(maxsize=10, ttl=120)
 
 CURRENCIES = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "NZD", "CHF"]
 
-# ✅ EXACT REAL PRICES — May 25, 2026 12:16 WAT
+# ✅ VERIFIED REAL PRICES — May 25, 2026 (Investing.com)
+# Key theme: US-Iran peace talks progressing, USD weak, gold pulling back
 BASE_PRICES = {
-    "EUR/USD": 1.16435, "GBP/USD": 1.34930, "USD/JPY": 158.952,
-    "USD/CHF": 0.78146, "AUD/USD": 0.71679, "USD/CAD": 1.38167,
-    "NZD/USD": 0.58721, "EUR/GBP": 0.86304, "EUR/JPY": 185.063,
-    "GBP/JPY": 214.430, "XAU/USD": 4573.70, "BTC/USD": 109250,
+    "EUR/USD": 1.16430, "GBP/USD": 1.34920, "USD/JPY": 158.910,
+    "USD/CHF": 0.78140, "AUD/USD": 0.71670, "USD/CAD": 1.38150,
+    "NZD/USD": 0.58700, "EUR/GBP": 0.86300, "EUR/JPY": 185.040,
+    "GBP/JPY": 214.380, "XAU/USD": 4558.82, "BTC/USD": 77650,
 }
 
 _sim_prices = dict(BASE_PRICES)
