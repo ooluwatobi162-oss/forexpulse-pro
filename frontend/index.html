@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ForexPulse Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CitizensForex — Elite Trading Intelligence</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -12,422 +12,527 @@
   --green:#00ff88;--cyan:#00d4ff;--gold:#ffd700;--red:#ff3366;--orange:#ff8800;
   --text:#e0f0ff;--text2:#7fa8c8;--text3:#4a7090;
   --border:#1a3a54;--border2:#0f2a40;
-  --glass:rgba(0,212,255,0.03);--glass2:rgba(0,255,136,0.05);
   --glow-g:0 0 20px rgba(0,255,136,0.3);--glow-c:0 0 20px rgba(0,212,255,0.3);
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overflow:hidden}
-.mono{font-family:'Share Tech Mono',monospace}
-::-webkit-scrollbar{width:4px;height:4px}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:var(--bg2)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.app{display:grid;grid-template-rows:28px 44px 1fr;grid-template-columns:56px 1fr 260px;height:100vh}
-.ticker-bar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border2);padding:0 8px;display:flex;align-items:center;overflow:hidden}
-.top-bar{grid-column:1/-1;background:var(--bg3);border-bottom:1px solid var(--border);padding:0 12px;display:flex;align-items:center;gap:12px}
-.sidebar{background:var(--bg2);border-right:1px solid var(--border2);display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;overflow-y:auto}
-.main{overflow-y:auto;background:var(--bg);padding:10px}
-.right-panel{background:var(--bg2);border-left:1px solid var(--border2);overflow-y:auto;padding:8px}
-.ticker-scroll{display:flex;gap:24px;white-space:nowrap;animation:ticker 40s linear infinite}
-.ticker-item{font-size:11px;display:flex;gap:6px;align-items:center}
-.ticker-item .sym{color:var(--cyan);font-weight:600}
+
+/* LAYOUT */
+.app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.top-section{flex-shrink:0}
+.content-area{display:flex;flex:1;overflow:hidden}
+.main{flex:1;overflow-y:auto;padding:8px}
+.right-panel{width:240px;background:var(--bg2);border-left:1px solid var(--border2);overflow-y:auto;padding:8px;flex-shrink:0}
+
+/* TICKER */
+.ticker-bar{background:var(--bg2);border-bottom:1px solid var(--border2);padding:0 8px;height:26px;display:flex;align-items:center;overflow:hidden}
+.ticker-wrap{overflow:hidden;flex:1}
+.ticker-scroll{display:flex;gap:20px;white-space:nowrap;animation:ticker 50s linear infinite}
+.ticker-item{font-size:10px;display:flex;gap:5px;align-items:center}
+.ticker-item .sym{color:var(--cyan);font-weight:700}
 .ticker-item .chg.up{color:var(--green)}
 .ticker-item .chg.dn{color:var(--red)}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.2s ease-in-out infinite;box-shadow:var(--glow-g)}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
-.top-stat{display:flex;flex-direction:column;padding:0 10px;border-right:1px solid var(--border2);font-size:10px}
-.top-stat .label{color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
-.top-stat .val{color:var(--gold);font-weight:600;font-size:12px}
-.top-stat .val.up{color:var(--green)}
-.top-stat .val.dn{color:var(--red)}
-.session-clocks{display:flex;gap:8px;margin-left:auto}
-.clock{padding:3px 8px;border-radius:3px;font-size:10px;text-align:center;border:1px solid var(--border)}
-.clock.active{border-color:var(--green);background:rgba(0,255,136,.08)}
-.clock .city{color:var(--text3);font-size:9px}
-.clock .time{font-weight:600;color:var(--text)}
-.clock.active .time{color:var(--green)}
-.vol-bar{display:flex;align-items:center;gap:6px;font-size:11px;margin-left:8px}
-.vol-indicator{height:8px;width:60px;background:var(--bg4);border-radius:4px;overflow:hidden}
-.vol-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--orange));border-radius:4px;transition:width .5s}
-.nav-btn{width:40px;height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:8px;cursor:pointer;transition:all .2s;background:none;border:1px solid transparent}
-.nav-btn:hover{background:var(--glass2);border-color:var(--border)}
-.nav-btn.active{background:rgba(0,212,255,.1);border-color:var(--cyan);box-shadow:var(--glow-c)}
-.nav-btn svg{width:18px;height:18px;stroke:var(--text3);fill:none;stroke-width:1.5;transition:stroke .2s}
-.nav-btn.active svg,.nav-btn:hover svg{stroke:var(--cyan)}
-.nav-btn .nav-label{font-size:7px;color:var(--text3);letter-spacing:.3px;text-transform:uppercase}
-.nav-btn.active .nav-label{color:var(--cyan)}
-.nav-divider{width:32px;height:1px;background:var(--border2);margin:4px 0}
-.card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px}
-.card-title{font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px;font-weight:600}
-.news-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;position:relative;overflow:hidden;transition:all .25s;cursor:pointer}
-.news-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+
+/* LIVE DOT */
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.2s ease-in-out infinite;box-shadow:var(--glow-g);flex-shrink:0}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.5}}
+
+/* TOP BAR */
+.top-bar{background:var(--bg3);border-bottom:1px solid var(--border);padding:0 10px;height:42px;display:flex;align-items:center;gap:8px;overflow:hidden}
+.brand{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;letter-spacing:2px;flex-shrink:0}
+.brand .c1{color:var(--green)}
+.brand .c2{color:var(--cyan)}
+.brand .c3{font-size:10px;color:var(--text3);font-weight:400}
+.mkt-badge{display:flex;align-items:center;gap:4px;font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);flex-shrink:0}
+.mkt-badge span{color:var(--green);font-weight:700}
+.top-stat{display:flex;flex-direction:column;padding:0 8px;border-right:1px solid var(--border2);font-size:9px;flex-shrink:0}
+.top-stat .lb{color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.top-stat .vl{font-weight:700;font-size:11px}
+.top-stat .vl.gold{color:var(--gold)}
+.top-stat .vl.up{color:var(--green)}
+.top-stat .vl.dn{color:var(--red)}
+.clocks{display:flex;gap:4px;margin-left:auto}
+.clk{padding:2px 6px;border-radius:3px;font-size:9px;text-align:center;border:1px solid var(--border);flex-shrink:0}
+.clk.active{border-color:var(--green);background:rgba(0,255,136,.08)}
+.clk .city{color:var(--text3);font-size:7px;text-transform:uppercase}
+.clk .time{font-weight:600;color:var(--text);font-size:10px}
+.clk.active .time{color:var(--green)}
+
+/* BOTTOM NAV (mobile) */
+.bottom-nav{display:none;background:var(--bg2);border-top:1px solid var(--border);padding:6px 0 8px;flex-shrink:0}
+.bottom-nav-inner{display:flex;justify-content:space-around}
+.bnav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .2s}
+.bnav-btn svg{width:18px;height:18px;stroke:var(--text3);fill:none;stroke-width:1.5}
+.bnav-btn span{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px}
+.bnav-btn.active svg{stroke:var(--cyan)}
+.bnav-btn.active span{color:var(--cyan)}
+
+/* SIDEBAR (desktop) */
+.sidebar{background:var(--bg2);border-right:1px solid var(--border2);display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:3px;width:52px;flex-shrink:0;overflow-y:auto}
+.nav-btn{width:38px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:6px;cursor:pointer;background:none;border:1px solid transparent;transition:all .2s}
+.nav-btn:hover{background:rgba(0,212,255,.06);border-color:var(--border)}
+.nav-btn.active{background:rgba(0,212,255,.1);border-color:var(--cyan)}
+.nav-btn svg{width:16px;height:16px;stroke:var(--text3);fill:none;stroke-width:1.5}
+.nav-btn.active svg{stroke:var(--cyan)}
+.nav-btn .nl{font-size:6px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px}
+.nav-btn.active .nl{color:var(--cyan)}
+.nav-div{width:28px;height:1px;background:var(--border2);margin:2px 0}
+
+/* CARDS */
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:8px}
+.card-title{font-size:10px;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-weight:600;display:flex;align-items:center;gap:5px}
+
+/* PRICE CARDS WITH SLIDER */
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.price-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;position:relative;overflow:hidden;transition:border-color .3s}
+.price-card.up{border-color:rgba(0,255,136,.3)}
+.price-card.dn{border-color:rgba(255,51,102,.3)}
+.price-card .pair-name{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.price-card .price-val{font-size:18px;font-weight:700;font-family:'Rajdhani',sans-serif;color:var(--text);transition:color .3s}
+.price-card.up .price-val{color:var(--green)}
+.price-card.dn .price-val{color:var(--red)}
+.price-card .price-chg{font-size:10px;margin-top:1px}
+.price-card.up .price-chg{color:var(--green)}
+.price-card.dn .price-chg{color:var(--red)}
+
+/* PRICE SLIDER BAR */
+.price-slider{width:100%;height:3px;background:var(--bg4);border-radius:2px;margin-top:6px;overflow:hidden;position:relative}
+.price-slider-fill{height:100%;border-radius:2px;transition:width .5s ease;background:linear-gradient(90deg,var(--cyan),var(--green))}
+.price-card.dn .price-slider-fill{background:linear-gradient(90deg,var(--red),var(--orange))}
+
+/* MINI SPARKLINE */
+
+
+/* NEWS */
+.news-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:6px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s}
+.news-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px 0 0 2px}
 .news-card.bullish::before{background:var(--green)}
 .news-card.bearish::before{background:var(--red)}
 .news-card.neutral::before{background:var(--text3)}
 .news-card:hover{border-color:var(--cyan);transform:translateY(-1px)}
-.news-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.news-title{font-size:12px;color:var(--text);font-weight:500;line-height:1.4;flex:1;padding-right:8px}
-.news-time{font-size:10px;color:var(--text3);white-space:nowrap}
-.news-meta{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
-.tag{padding:2px 6px;border-radius:3px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.tag.source{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
-.tag.currency{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.2)}
-.tag.bullish{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2)}
-.tag.bearish{background:rgba(255,51,102,.1);color:var(--red);border:1px solid rgba(255,51,102,.2)}
-.tag.neutral{background:rgba(74,112,144,.2);color:var(--text2);border:1px solid var(--border)}
-.tag.signal{background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid var(--cyan);font-size:10px;padding:2px 8px}
-.news-ai{background:var(--bg4);border-radius:5px;padding:6px 8px;font-size:10px;color:var(--text2);display:flex;justify-content:space-between;align-items:center;gap:8px}
-.confidence-bar{flex:1;height:4px;background:var(--bg);border-radius:2px;overflow:hidden}
-.confidence-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--green))}
-.confidence-val{font-size:10px;color:var(--green);font-weight:600;white-space:nowrap}
-.vol-dot{width:5px;height:5px;border-radius:50%}
-.signal-card{background:var(--bg3);border-radius:8px;padding:10px;margin-bottom:8px;border:1px solid var(--border);position:relative;overflow:hidden}
+.news-title{font-size:11px;color:var(--text);font-weight:500;line-height:1.4;margin-bottom:5px}
+.news-meta{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px;align-items:center}
+.news-time{font-size:9px;color:var(--text3);margin-left:auto}
+.tag{padding:1px 5px;border-radius:3px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.tag.src{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
+.tag.curr{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.2)}
+.tag.bull{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2)}
+.tag.bear{background:rgba(255,51,102,.1);color:var(--red);border:1px solid rgba(255,51,102,.2)}
+.tag.sig{background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid rgba(0,212,255,.4);font-size:9px;padding:2px 6px}
+.news-ai{background:var(--bg4);border-radius:4px;padding:5px 7px;font-size:9px;color:var(--text2);display:flex;align-items:center;gap:6px;margin-top:4px}
+.conf-bar{flex:1;height:3px;background:var(--bg);border-radius:2px;overflow:hidden}
+.conf-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:2px}
+.conf-val{font-size:9px;color:var(--green);font-weight:700;white-space:nowrap}
+
+/* SIGNALS */
+.signal-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:6px}
 .signal-card.buy{border-color:rgba(0,255,136,.3)}
 .signal-card.sell{border-color:rgba(255,51,102,.3)}
-.signal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.signal-pair{font-size:16px;font-weight:700;letter-spacing:1px;font-family:'Rajdhani',sans-serif}
-.signal-dir{padding:4px 12px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:1.5px}
-.signal-dir.buy{background:rgba(0,255,136,.15);color:var(--green);border:1px solid rgba(0,255,136,.4)}
-.signal-dir.sell{background:rgba(255,51,102,.15);color:var(--red);border:1px solid rgba(255,51,102,.4)}
-.signal-levels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:8px 0}
-.level{text-align:center;padding:5px;border-radius:5px;background:var(--bg4)}
-.level .l-label{font-size:9px;color:var(--text3);text-transform:uppercase}
-.level .l-val{font-size:12px;font-weight:600;font-family:'Share Tech Mono',monospace}
-.level.entry .l-val{color:var(--cyan)}
-.level.tp .l-val{color:var(--green)}
-.level.sl .l-val{color:var(--red)}
-.signal-reason{font-size:9px;color:var(--text3);line-height:1.6;margin-top:6px;padding-top:6px;border-top:1px solid var(--border2)}
-.reason-item{display:flex;align-items:center;gap:4px}
-.reason-dot{width:4px;height:4px;border-radius:50%;background:var(--green);flex-shrink:0}
-.rp-section{margin-bottom:12px}
-.rp-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin-bottom:6px;display:flex;align-items:center;gap:5px;font-weight:600}
-.strength-grid{display:grid;grid-template-columns:1fr;gap:3px}
-.strength-row{display:flex;align-items:center;gap:6px;font-size:10px}
-.str-label{width:30px;color:var(--text2);font-weight:600}
-.str-bar{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
-.str-fill{height:100%;border-radius:3px;transition:width .8s}
-.str-val{width:24px;text-align:right;font-size:9px;font-family:'Share Tech Mono',monospace}
-.heatmap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
-.heat-cell{border-radius:4px;padding:4px;text-align:center;font-size:9px;font-weight:600;cursor:pointer;transition:all .2s}
-.heat-cell:hover{transform:scale(1.05)}
-.heat-cell .pair{font-size:8px;color:rgba(255,255,255,.6);margin-bottom:1px}
-.heat-cell .change{font-size:10px;font-weight:700}
-.chat-area{height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
-.chat-msg{max-width:90%;padding:5px 8px;border-radius:6px;font-size:10px;line-height:1.4}
-.chat-msg.user{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--text);align-self:flex-end}
-.chat-msg.ai{background:var(--bg4);border:1px solid var(--border);color:var(--text);align-self:flex-start}
-.chat-msg.ai .ai-label{color:var(--cyan);font-size:9px;font-weight:600;margin-bottom:2px}
-.chat-input-row{display:flex;gap:4px}
-.chat-input{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:10px;color:var(--text);outline:none;font-family:inherit}
-.chat-input:focus{border-color:var(--cyan)}
-.chat-send{padding:5px 8px;background:rgba(0,212,255,.1);border:1px solid var(--cyan);border-radius:5px;color:var(--cyan);font-size:10px;cursor:pointer;font-weight:600}
-.chat-send:hover{background:rgba(0,212,255,.2)}
-.quick-btns{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
-.quick-btn{padding:2px 6px;background:var(--bg4);border:1px solid var(--border);border-radius:3px;font-size:8px;color:var(--text3);cursor:pointer;transition:all .2s}
-.quick-btn:hover{border-color:var(--cyan);color:var(--cyan)}
-.econ-item{padding:6px;border-radius:5px;background:var(--bg4);margin-bottom:4px;display:flex;gap:8px;align-items:center}
-.econ-time{font-size:9px;color:var(--text3);white-space:nowrap;font-family:'Share Tech Mono',monospace}
+.sig-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.sig-pair{font-size:15px;font-weight:700;font-family:'Rajdhani',sans-serif}
+.sig-dir{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:1px}
+.sig-dir.buy{background:rgba(0,255,136,.15);color:var(--green);border:1px solid rgba(0,255,136,.4)}
+.sig-dir.sell{background:rgba(255,51,102,.15);color:var(--red);border:1px solid rgba(255,51,102,.4)}
+.sig-levels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin:6px 0}
+.lvl{text-align:center;padding:4px;border-radius:4px;background:var(--bg4)}
+.lvl .ll{font-size:8px;color:var(--text3);text-transform:uppercase}
+.lvl .lv{font-size:11px;font-weight:600;font-family:'Share Tech Mono',monospace}
+.lvl.entry .lv{color:var(--cyan)}
+.lvl.tp .lv{color:var(--green)}
+.lvl.sl .lv{color:var(--red)}
+.sig-reason{font-size:9px;color:var(--text3);line-height:1.6;margin-top:5px;padding-top:5px;border-top:1px solid var(--border2)}
+.rdot{width:4px;height:4px;border-radius:50%;background:var(--green);flex-shrink:0;display:inline-block;margin-right:4px}
+
+/* RIGHT PANEL */
+.rp-sec{margin-bottom:10px}
+.rp-title{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--cyan);margin-bottom:5px;font-weight:700}
+.str-row{display:flex;align-items:center;gap:5px;font-size:9px;margin-bottom:2px}
+.str-lbl{width:28px;color:var(--text2);font-weight:600}
+.str-bar{flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.str-fill{height:100%;border-radius:3px;transition:width 1s}
+.str-val{width:22px;text-align:right;font-size:8px;font-family:'Share Tech Mono',monospace}
+.heat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.heat-cell{border-radius:3px;padding:3px;text-align:center;font-size:8px;font-weight:700;cursor:pointer}
+.heat-cell .hp{font-size:7px;color:rgba(255,255,255,.5);margin-bottom:1px}
+.mover-row{display:flex;align-items:center;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border2);font-size:9px}
+.mover-row:last-child{border:none}
+.econ-item{padding:5px;border-radius:4px;background:var(--bg4);margin-bottom:3px;display:flex;gap:6px;align-items:center}
+.econ-time{font-size:8px;color:var(--text3);white-space:nowrap;font-family:'Share Tech Mono',monospace}
 .econ-body{flex:1}
-.econ-event{font-size:10px;color:var(--text);font-weight:500}
-.econ-curr{font-size:9px;color:var(--gold)}
-.econ-impact{padding:1px 5px;border-radius:2px;font-size:8px;font-weight:700;text-transform:uppercase}
-.econ-impact.high{background:rgba(255,51,102,.15);color:var(--red)}
-.econ-impact.med{background:rgba(255,136,0,.15);color:var(--orange)}
-.econ-impact.low{background:rgba(74,112,144,.2);color:var(--text3)}
-.countdown{font-size:9px;color:var(--cyan);font-family:'Share Tech Mono',monospace}
-.mover-item{display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border2);font-size:10px}
-.mover-item:last-child{border-bottom:none}
-.mover-pair{font-weight:600;color:var(--text)}
-.mover-price{font-family:'Share Tech Mono',monospace;color:var(--text2)}
-.mover-chg.up{color:var(--green)}
-.mover-chg.dn{color:var(--red)}
-.mini-chart{width:100%;height:80px;margin-top:6px}
+.econ-ev{font-size:9px;color:var(--text);font-weight:500}
+.econ-cu{font-size:8px;color:var(--gold)}
+.imp{padding:1px 4px;border-radius:2px;font-size:7px;font-weight:700;text-transform:uppercase}
+.imp.high{background:rgba(255,51,102,.15);color:var(--red)}
+.imp.med{background:rgba(255,136,0,.15);color:var(--orange)}
+.cntd{font-size:8px;color:var(--cyan);font-family:'Share Tech Mono',monospace}
+
+/* CHAT */
+.chat-area{height:120px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-bottom:5px}
+.cmsg{max-width:92%;padding:4px 7px;border-radius:5px;font-size:9px;line-height:1.4}
+.cmsg.user{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);align-self:flex-end}
+.cmsg.ai{background:var(--bg4);border:1px solid var(--border);align-self:flex-start}
+.cmsg.ai .ailbl{color:var(--cyan);font-size:8px;font-weight:700;margin-bottom:2px}
+.chat-inp-row{display:flex;gap:3px}
+.chat-inp{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:4px 7px;font-size:9px;color:var(--text);outline:none;font-family:inherit}
+.chat-inp:focus{border-color:var(--cyan)}
+.chat-send{padding:4px 7px;background:rgba(0,212,255,.1);border:1px solid var(--cyan);border-radius:4px;color:var(--cyan);font-size:9px;cursor:pointer;font-weight:700}
+.qbtns{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:4px}
+.qbtn{padding:2px 5px;background:var(--bg4);border:1px solid var(--border);border-radius:3px;font-size:7px;color:var(--text3);cursor:pointer;transition:all .15s}
+.qbtn:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* PAGES */
 .page{display:none}
 .page.active{display:block}
-.page-title{font-size:16px;font-weight:700;color:var(--cyan);font-family:'Rajdhani',sans-serif;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.glow-btn{padding:6px 14px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid;letter-spacing:.5px;font-family:'Exo 2',sans-serif}
-.glow-btn.green{background:rgba(0,255,136,.1);border-color:var(--green);color:var(--green)}
-.glow-btn.green:hover{background:rgba(0,255,136,.2);box-shadow:var(--glow-g)}
-.glow-btn.cyan{background:rgba(0,212,255,.1);border-color:var(--cyan);color:var(--cyan)}
-.glow-btn.cyan:hover{background:rgba(0,212,255,.2);box-shadow:var(--glow-c)}
-.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.indicator-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px}
-.ind-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.ind-name{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
-.ind-val{font-size:14px;font-weight:700;font-family:'Rajdhani',sans-serif}
-.ind-signal{padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.ind-signal.bull{background:rgba(0,255,136,.12);color:var(--green);border:1px solid rgba(0,255,136,.3)}
-.ind-signal.bear{background:rgba(255,51,102,.12);color:var(--red);border:1px solid rgba(255,51,102,.3)}
-.ind-signal.neut{background:rgba(74,112,144,.2);color:var(--text2);border:1px solid var(--border)}
-.progress-arc{width:100%;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-top:4px}
-.progress-fill{height:100%;border-radius:3px}
-.typing-dots{display:flex;gap:3px;padding:2px 0}
-.typing-dots span{width:4px;height:4px;background:var(--cyan);border-radius:50%;animation:blink 1.2s ease-in-out infinite}
-.typing-dots span:nth-child(2){animation-delay:.2s}
-.typing-dots span:nth-child(3){animation-delay:.4s}
+.page-title{font-size:14px;font-weight:700;color:var(--cyan);font-family:'Rajdhani',sans-serif;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+/* FILTERS */
+.filters{display:flex;gap:3px;margin-bottom:6px;flex-wrap:wrap}
+.fbtn{padding:2px 7px;border-radius:3px;font-size:8px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text3);text-transform:uppercase;transition:all .15s}
+.fbtn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.06)}
+
+/* GLOW BTN */
+.gbtn{padding:5px 12px;border-radius:4px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid;letter-spacing:.5px;font-family:'Exo 2',sans-serif;transition:all .2s}
+.gbtn.cyan{background:rgba(0,212,255,.1);border-color:var(--cyan);color:var(--cyan)}
+.gbtn.cyan:hover{background:rgba(0,212,255,.2)}
+.gbtn.green{background:rgba(0,255,136,.1);border-color:var(--green);color:var(--green)}
+
+/* ANALYSIS */
+.ind-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ind-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:7px}
+.ind-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.ind-name{font-size:9px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.3px}
+.ind-sig{padding:1px 5px;border-radius:3px;font-size:8px;font-weight:700;text-transform:uppercase}
+.ind-sig.bull{background:rgba(0,255,136,.12);color:var(--green);border:1px solid rgba(0,255,136,.3)}
+.ind-sig.bear{background:rgba(255,51,102,.12);color:var(--red);border:1px solid rgba(255,51,102,.3)}
+.ind-sig.neut{background:rgba(74,112,144,.2);color:var(--text2);border:1px solid var(--border)}
+.ind-val{font-size:12px;font-weight:700;font-family:'Rajdhani',sans-serif}
+.prog{width:100%;height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-top:3px}
+.prog-fill{height:100%;border-radius:2px}
+
+/* TYPING */
+.typing{display:flex;gap:2px;padding:2px 0}
+.typing span{width:4px;height:4px;background:var(--cyan);border-radius:50%;animation:blink 1.2s ease-in-out infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
-.dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.news-filters{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
-.filter-btn{padding:3px 8px;border-radius:3px;font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text3);text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
-.filter-btn.active,.filter-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.06)}
-.section-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.badge-count{background:var(--cyan);color:var(--bg);border-radius:10px;padding:1px 6px;font-size:9px;font-weight:700}
-.mkt-status{display:flex;align-items:center;gap:5px;font-size:10px;padding:2px 8px;border-radius:3px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);margin-right:4px}
-.mkt-status span{color:var(--green);font-weight:600}
-.alert-flash{animation:flashIn .4s ease-out}
-@keyframes flashIn{0%{opacity:0;transform:translateX(-10px)}100%{opacity:1;transform:translateX(0)}}
-.conf-ring{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;border:2px solid var(--green);color:var(--green)}
-.risk-low{background:rgba(0,255,136,.1);color:var(--green);padding:2px 6px;border-radius:3px;font-size:9px;font-weight:600}
-.risk-med{background:rgba(255,136,0,.1);color:var(--orange);padding:2px 6px;border-radius:3px;font-size:9px;font-weight:600}
-.risk-high{background:rgba(255,51,102,.1);color:var(--red);padding:2px 6px;border-radius:3px;font-size:9px;font-weight:600}
+
+/* SECTION HDR */
+.sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.badge{background:var(--cyan);color:var(--bg);border-radius:8px;padding:1px 5px;font-size:8px;font-weight:700}
+
+/* FEAR GAUGE */
+.fg-svg{width:100%;max-width:160px;display:block;margin:0 auto}
+
+/* COMMUNITY */
+.post-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:6px}
+.post-avatar{width:28px;height:28px;border-radius:50%;background:rgba(0,212,255,.15);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--cyan);flex-shrink:0}
+
+/* FLASH */
+.flash{animation:flashIn .4s ease-out}
+@keyframes flashIn{0%{opacity:0;transform:translateX(-8px)}100%{opacity:1;transform:translateX(0)}}
+
+/* PRICE UPDATE FLASH */
+@keyframes priceUp{0%{background:rgba(0,255,136,.2)}100%{background:transparent}}
+@keyframes priceDn{0%{background:rgba(255,51,102,.2)}100%{background:transparent}}
+.flash-up{animation:priceUp .6s ease-out}
+.flash-dn{animation:priceDn .6s ease-out}
+
+/* RESPONSIVE MOBILE */
+@media(max-width:700px){
+  .sidebar{display:none}
+  .right-panel{display:none}
+  .bottom-nav{display:block}
+  .content-area{flex-direction:column}
+  .clocks{display:none}
+  .price-grid{grid-template-columns:1fr 1fr}
+  .top-stat{padding:0 5px}
+  .brand{font-size:14px}
+}
+@media(min-width:701px){
+  .bottom-nav{display:none}
+}
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- TICKER BAR -->
-<div class="ticker-bar">
-  <div class="live-dot" style="margin-right:8px;flex-shrink:0"></div>
-  <span style="font-size:9px;color:var(--green);font-weight:600;margin-right:10px;font-family:'Rajdhani',sans-serif;letter-spacing:1px">LIVE</span>
-  <div style="overflow:hidden;flex:1"><div class="ticker-scroll" id="tickerScroll"></div></div>
+<!-- TICKER -->
+<div class="ticker-bar top-section">
+  <div class="live-dot" style="margin-right:7px"></div>
+  <span style="font-size:8px;color:var(--green);font-weight:700;margin-right:8px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;flex-shrink:0">LIVE</span>
+  <div class="ticker-wrap"><div class="ticker-scroll" id="tickerScroll"></div></div>
 </div>
 
 <!-- TOP BAR -->
-<div class="top-bar">
-  <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--cyan);letter-spacing:2px;flex-shrink:0">
-    <span style="color:var(--green)">FOREX</span>PULSE <span style="font-size:11px;color:var(--text3);font-weight:400">PRO</span>
-  </div>
-  <div class="mkt-status"><div class="live-dot" style="width:5px;height:5px"></div><span>MARKET OPEN</span></div>
-  <div class="top-stat"><span class="label">GOLD</span><span class="val" id="goldPrice">$3,285.00</span></div>
-  <div class="top-stat"><span class="label">BTC</span><span class="val up" id="btcPrice">$107,500</span></div>
-  <div class="top-stat"><span class="label">VIX</span><span class="val" id="vixVal">14.2</span></div>
-  <div class="vol-bar">
-    <span style="color:var(--text3);font-size:10px">VOLATILITY</span>
-    <div class="vol-indicator"><div class="vol-fill" id="volFill" style="width:42%"></div></div>
-    <span style="font-size:10px;color:var(--orange);font-weight:600" id="volPct">42%</span>
-  </div>
-  <div class="session-clocks">
-    <div class="clock" id="clk-tokyo"><div class="city">TOKYO</div><div class="time" id="t-tokyo">--:--</div></div>
-    <div class="clock" id="clk-london"><div class="city">LONDON</div><div class="time" id="t-london">--:--</div></div>
-    <div class="clock active" id="clk-ny"><div class="city">NEW YORK</div><div class="time" id="t-ny">--:--</div></div>
-    <div class="clock" id="clk-sydney"><div class="city">SYDNEY</div><div class="time" id="t-sydney">--:--</div></div>
+<div class="top-bar top-section">
+  <div class="brand"><span class="c1">CITIZENS</span><span class="c2">FOREX</span> <span class="c3">PRO</span></div>
+  <div class="mkt-badge"><div class="live-dot" style="width:5px;height:5px"></div><span>OPEN</span></div>
+  <div class="top-stat"><span class="lb">GOLD</span><span class="vl gold" id="goldPrice">$4,573</span></div>
+  <div class="top-stat"><span class="lb">BTC</span><span class="vl up" id="btcPrice">$109,250</span></div>
+  <div class="top-stat"><span class="lb">VIX</span><span class="vl" id="vixVal" style="color:var(--orange)">14.2</span></div>
+  <div class="clocks">
+    <div class="clk" id="clk-tokyo"><div class="city">TOKYO</div><div class="time" id="t-tokyo">--:--</div></div>
+    <div class="clk" id="clk-london"><div class="city">LONDON</div><div class="time" id="t-london">--:--</div></div>
+    <div class="clk active" id="clk-ny"><div class="city">NEW YORK</div><div class="time" id="t-ny">--:--</div></div>
+    <div class="clk" id="clk-sydney"><div class="city">SYDNEY</div><div class="time" id="t-sydney">--:--</div></div>
   </div>
 </div>
 
-<!-- LEFT SIDEBAR -->
+<!-- CONTENT -->
+<div class="content-area">
+
+<!-- SIDEBAR -->
 <div class="sidebar">
-  <button class="nav-btn active" data-page="dashboard" onclick="showPage('dashboard',this)" title="Dashboard">
+  <button class="nav-btn active" onclick="showPage('dashboard',this)">
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-    <span class="nav-label">Dash</span>
+    <span class="nl">Dash</span>
   </button>
-  <button class="nav-btn" data-page="signals" onclick="showPage('signals',this)" title="AI Signals">
+  <button class="nav-btn" onclick="showPage('signals',this)">
     <svg viewBox="0 0 24 24"><path d="M3 3l7 7 4-4 7 7"/><path d="M21 3h-6M21 3v6"/></svg>
-    <span class="nav-label">Signals</span>
+    <span class="nl">Signals</span>
   </button>
-  <button class="nav-btn" data-page="news" onclick="showPage('news',this)" title="News Feed">
+  <button class="nav-btn" onclick="showPage('news',this)">
     <svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
-    <span class="nav-label">News</span>
+    <span class="nl">News</span>
   </button>
-  <button class="nav-btn" data-page="analysis" onclick="showPage('analysis',this)" title="Technical Analysis">
+  <button class="nav-btn" onclick="showPage('analysis',this)">
     <svg viewBox="0 0 24 24"><path d="M3 20l4-8 4 4 4-6 4 4"/></svg>
-    <span class="nav-label">TA</span>
+    <span class="nl">TA</span>
   </button>
-  <div class="nav-divider"></div>
-  <button class="nav-btn" data-page="calendar" onclick="showPage('calendar',this)" title="Economic Calendar">
+  <div class="nav-div"></div>
+  <button class="nav-btn" onclick="showPage('calendar',this)">
     <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-    <span class="nav-label">Events</span>
+    <span class="nl">Events</span>
   </button>
-  <button class="nav-btn" data-page="ai" onclick="showPage('ai',this)" title="AI Analyst">
+  <button class="nav-btn" onclick="showPage('ai',this)">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
-    <span class="nav-label">AI</span>
+    <span class="nl">AI</span>
   </button>
-  <button class="nav-btn" data-page="community" onclick="showPage('community',this)" title="Community">
+  <button class="nav-btn" onclick="showPage('community',this)">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-    <span class="nav-label">Social</span>
+    <span class="nl">Social</span>
   </button>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main">
 
-  <!-- DASHBOARD -->
-  <div class="page active" id="page-dashboard">
-    <div class="page-title">📊 TRADING DASHBOARD</div>
-    <div class="dashboard-grid" style="margin-bottom:10px">
-      <div class="card">
-        <div class="card-title">EUR/USD</div>
-        <div style="font-size:22px;font-weight:700;font-family:'Rajdhani',sans-serif" id="d-eurusd">1.13200</div>
-        <div style="font-size:11px;color:var(--green);margin-top:2px" id="d-eurusd-chg">▲ +0.21%</div>
-        <canvas class="mini-chart" id="chart-eurusd"></canvas>
-      </div>
-      <div class="card">
-        <div class="card-title">GBP/USD</div>
-        <div style="font-size:22px;font-weight:700;font-family:'Rajdhani',sans-serif" id="d-gbpusd">1.34500</div>
-        <div style="font-size:11px;color:var(--red);margin-top:2px" id="d-gbpusd-chg">▼ -0.14%</div>
-        <canvas class="mini-chart" id="chart-gbpusd"></canvas>
-      </div>
-      <div class="card">
-        <div class="card-title">USD/JPY</div>
-        <div style="font-size:22px;font-weight:700;font-family:'Rajdhani',sans-serif" id="d-usdjpy">159.150</div>
-        <div style="font-size:11px;color:var(--green);margin-top:2px" id="d-usdjpy-chg">▲ +0.21%</div>
-        <canvas class="mini-chart" id="chart-usdjpy"></canvas>
-      </div>
-      <div class="card">
-        <div class="card-title">XAU/USD</div>
-        <div style="font-size:22px;font-weight:700;font-family:'Rajdhani',sans-serif" id="d-xauusd">3285.00</div>
-        <div style="font-size:11px;color:var(--green);margin-top:2px" id="d-xauusd-chg">▲ +0.36%</div>
-        <canvas class="mini-chart" id="chart-xauusd"></canvas>
-      </div>
-    </div>
-    <div class="section-hdr">
-      <div style="font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;font-weight:600">📰 Market Intelligence Feed</div>
-      <span class="badge-count" id="news-count">12</span>
-    </div>
-    <div class="news-filters">
-      <button class="filter-btn active" onclick="filterNews('all',this)">ALL</button>
-      <button class="filter-btn" onclick="filterNews('USD',this)">USD</button>
-      <button class="filter-btn" onclick="filterNews('EUR',this)">EUR</button>
-      <button class="filter-btn" onclick="filterNews('GBP',this)">GBP</button>
-      <button class="filter-btn" onclick="filterNews('JPY',this)">JPY</button>
-    </div>
-    <div id="newsFeed"></div>
-  </div>
+<!-- DASHBOARD -->
+<div class="page active" id="page-dashboard">
+  <div class="page-title">📊 TRADING DASHBOARD</div>
 
-  <!-- SIGNALS -->
-  <div class="page" id="page-signals">
-    <div class="page-title">⚡ AI SIGNAL CENTER</div>
-    <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
-      <button class="glow-btn cyan" onclick="loadSignals()">⚡ REFRESH SIGNALS</button>
+  <!-- PRICE CARDS WITH SLIDERS -->
+  <div class="price-grid" id="priceGrid">
+    <div class="price-card" id="pc-EURUSD">
+      <div class="pair-name">EUR/USD</div>
+      <div class="price-val" id="pv-EURUSD">1.16435</div>
+      <div class="price-chg" id="pc2-EURUSD">▲ +0.21%</div>
+      <div class="price-slider"><div class="price-slider-fill" id="ps-EURUSD" style="width:62%"></div></div>
+      
     </div>
-    <div id="signalsFeed"></div>
-  </div>
-
-  <!-- NEWS -->
-  <div class="page" id="page-news">
-    <div class="page-title">📰 LIVE NEWS FEED</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:10px">AI-powered sentiment analysis • Updates every 60 seconds</div>
-    <div id="fullNewsFeed"></div>
-  </div>
-
-  <!-- ANALYSIS -->
-  <div class="page" id="page-analysis">
-    <div class="page-title">📈 TECHNICAL ANALYSIS</div>
-    <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-      <select id="ta-pair" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;outline:none" onchange="loadAnalysis()">
-        <option>EUR/USD</option><option>GBP/USD</option><option>USD/JPY</option><option>AUD/USD</option><option>XAU/USD</option>
-      </select>
-      <select id="ta-tf" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;outline:none" onchange="loadAnalysis()">
-        <option>M15</option><option>H1</option><option selected>H4</option><option>D1</option>
-      </select>
-      <button class="glow-btn green" onclick="loadAnalysis()">⚡ ANALYZE</button>
+    <div class="price-card" id="pc-GBPUSD">
+      <div class="pair-name">GBP/USD</div>
+      <div class="price-val" id="pv-GBPUSD">1.34930</div>
+      <div class="price-chg" id="pc2-GBPUSD">▲ +0.15%</div>
+      <div class="price-slider"><div class="price-slider-fill" id="ps-GBPUSD" style="width:55%"></div></div>
+      
     </div>
-    <div class="card" id="ta-summary" style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div style="font-size:13px;font-weight:600" id="ta-verdict">OVERALL: BULLISH</div>
-          <div style="font-size:10px;color:var(--text3);margin-top:2px" id="ta-counts">8 Buy / 3 Sell / 1 Neutral</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:28px;font-weight:700;color:var(--green);font-family:'Rajdhani',sans-serif" id="ta-score">74</div>
-          <div style="font-size:9px;color:var(--text3)">AI SCORE</div>
-        </div>
-      </div>
+    <div class="price-card" id="pc-USDJPY">
+      <div class="pair-name">USD/JPY</div>
+      <div class="price-val" id="pv-USDJPY">158.952</div>
+      <div class="price-chg" id="pc2-USDJPY">▲ +0.18%</div>
+      <div class="price-slider"><div class="price-slider-fill" id="ps-USDJPY" style="width:58%"></div></div>
+      
     </div>
-    <div class="analysis-grid" id="indicatorGrid"></div>
-    <div class="card" style="margin-top:8px">
-      <div class="card-title">Pattern Recognition</div>
-      <div id="patterns-detected" style="display:flex;flex-wrap:wrap;gap:4px"></div>
-    </div>
-    <div class="card" style="margin-top:8px">
-      <div class="card-title">Smart Money Concepts</div>
-      <div id="smc-analysis"></div>
+    <div class="price-card" id="pc-XAUUSD">
+      <div class="pair-name">XAU/USD</div>
+      <div class="price-val" id="pv-XAUUSD">4573.70</div>
+      <div class="price-chg" id="pc2-XAUUSD">▲ +0.36%</div>
+      <div class="price-slider"><div class="price-slider-fill" id="ps-XAUUSD" style="width:72%"></div></div>
+      
     </div>
   </div>
 
-  <!-- CALENDAR -->
-  <div class="page" id="page-calendar">
-    <div class="page-title">🗓 ECONOMIC CALENDAR</div>
-    <div id="econCalendar"></div>
+  <div class="sec-hdr">
+    <div style="font-size:10px;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.8px">📰 Market Intelligence</div>
+    <span class="badge" id="news-count">12</span>
   </div>
-
-  <!-- AI ANALYST -->
-  <div class="page" id="page-ai">
-    <div class="page-title">🤖 AI ANALYST</div>
-    <div class="card" style="height:calc(100vh - 200px);display:flex;flex-direction:column">
-      <div style="flex:1;overflow-y:auto;margin-bottom:8px" id="fullChatArea">
-        <div class="chat-msg ai" style="font-size:11px;padding:8px 10px">
-          <div class="ai-label" style="font-size:10px;margin-bottom:4px">AI ANALYST — ONLINE</div>
-          Good morning, trader. Markets are showing USD strength across the board. EUR/USD testing 1.0860 support. Gold holding bullish structure above $2,330. What would you like to analyze?
-        </div>
-      </div>
-      <div class="quick-btns">
-        <button class="quick-btn" onclick="sendFullChat('Why is gold moving today?')">Gold movement</button>
-        <button class="quick-btn" onclick="sendFullChat('Which currencies are strongest?')">Strongest currencies</button>
-        <button class="quick-btn" onclick="sendFullChat('Is EURUSD bullish today?')">EUR/USD outlook</button>
-        <button class="quick-btn" onclick="sendFullChat('What news is affecting GBP?')">GBP news</button>
-        <button class="quick-btn" onclick="sendFullChat('Best pair to trade now?')">Best pair</button>
-      </div>
-      <div style="display:flex;gap:6px">
-        <input id="fullChatInput" class="chat-input" style="font-size:12px;padding:8px 10px" placeholder="Ask the AI analyst anything..." onkeydown="if(event.key==='Enter')sendFullChat()">
-        <button class="chat-send" style="padding:8px 14px" onclick="sendFullChat()">SEND ↗</button>
-      </div>
-    </div>
+  <div class="filters">
+    <button class="fbtn active" onclick="filterNews('all',this)">ALL</button>
+    <button class="fbtn" onclick="filterNews('USD',this)">USD</button>
+    <button class="fbtn" onclick="filterNews('EUR',this)">EUR</button>
+    <button class="fbtn" onclick="filterNews('GBP',this)">GBP</button>
+    <button class="fbtn" onclick="filterNews('JPY',this)">JPY</button>
+    <button class="fbtn" onclick="filterNews('AUD',this)">AUD</button>
   </div>
-
-  <!-- COMMUNITY -->
-  <div class="page" id="page-community">
-    <div class="page-title">👥 COMMUNITY</div>
-    <div id="communityFeed"></div>
-  </div>
-
+  <div id="newsFeed"></div>
 </div>
+
+<!-- SIGNALS -->
+<div class="page" id="page-signals">
+  <div class="page-title">⚡ AI SIGNAL CENTER</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <span style="font-size:9px;color:var(--text3)">AI-generated • Updates every 5 minutes</span>
+    <button class="gbtn cyan" onclick="loadSignals()">⚡ REFRESH</button>
+  </div>
+  <div id="signalsFeed"></div>
+</div>
+
+<!-- NEWS -->
+<div class="page" id="page-news">
+  <div class="page-title">📰 LIVE NEWS FEED</div>
+  <div style="font-size:9px;color:var(--text3);margin-bottom:8px">Fetching latest forex news • AI sentiment analysis</div>
+  <div id="fullNewsFeed"></div>
+</div>
+
+<!-- ANALYSIS -->
+<div class="page" id="page-analysis">
+  <div class="page-title">📈 TECHNICAL ANALYSIS</div>
+  <div style="display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap">
+    <select id="ta-pair" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 7px;border-radius:5px;font-size:10px;outline:none" onchange="loadAnalysis()">
+      <option>EUR/USD</option><option>GBP/USD</option><option>USD/JPY</option><option>AUD/USD</option><option>XAU/USD</option>
+    </select>
+    <select id="ta-tf" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 7px;border-radius:5px;font-size:10px;outline:none" onchange="loadAnalysis()">
+      <option>M15</option><option>H1</option><option selected>H4</option><option>D1</option>
+    </select>
+    <button class="gbtn green" onclick="loadAnalysis()">⚡ ANALYZE</button>
+  </div>
+  <div class="card" id="ta-summary" style="margin-bottom:7px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:12px;font-weight:600" id="ta-verdict">BULLISH</div>
+        <div style="font-size:9px;color:var(--text3);margin-top:1px" id="ta-counts">8 Buy / 2 Sell</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--green);font-family:'Rajdhani',sans-serif" id="ta-score">74</div>
+        <div style="font-size:8px;color:var(--text3)">AI SCORE</div>
+      </div>
+    </div>
+  </div>
+  <div class="ind-grid" id="indicatorGrid"></div>
+  <div class="card" style="margin-top:7px">
+    <div class="card-title">Pattern Recognition</div>
+    <div id="patterns-detected" style="display:flex;flex-wrap:wrap;gap:3px"></div>
+  </div>
+  <div class="card" style="margin-top:7px">
+    <div class="card-title">Smart Money Concepts</div>
+    <div id="smc-analysis"></div>
+  </div>
+</div>
+
+<!-- CALENDAR -->
+<div class="page" id="page-calendar">
+  <div class="page-title">🗓 ECONOMIC CALENDAR</div>
+  <div id="econCalendar"></div>
+</div>
+
+<!-- AI -->
+<div class="page" id="page-ai">
+  <div class="page-title">🤖 AI ANALYST</div>
+  <div class="card" style="display:flex;flex-direction:column;height:calc(100vh - 200px);margin-bottom:0">
+    <div style="flex:1;overflow-y:auto;margin-bottom:6px" id="fullChatArea">
+      <div class="cmsg ai" style="font-size:10px;padding:7px 9px">
+        <div class="ailbl" style="font-size:9px;margin-bottom:3px">CITIZENSFOREX AI — ONLINE</div>
+        Welcome trader! CitizensForex AI — May 25, 2026. 🔴 US-Iran war tensions driving markets. Gold surging at $4,573. EUR/USD 1.1643, GBP/USD 1.3493, USD/JPY 158.95. AUD strongest currency today +0.57%. Ask me anything!
+      </div>
+    </div>
+    <div class="qbtns">
+      <button class="qbtn" onclick="sendFullChat('Why is gold moving today?')">Gold outlook</button>
+      <button class="qbtn" onclick="sendFullChat('Which currencies are strongest right now?')">Strongest?</button>
+      <button class="qbtn" onclick="sendFullChat('Is EURUSD bullish or bearish today?')">EUR/USD?</button>
+      <button class="qbtn" onclick="sendFullChat('What is the best pair to trade now?')">Best pair?</button>
+      <button class="qbtn" onclick="sendFullChat('Explain smart money concepts')">SMC?</button>
+    </div>
+    <div style="display:flex;gap:5px">
+      <input id="fullChatInput" class="chat-inp" style="font-size:11px;padding:7px 10px" placeholder="Ask CitizensForex AI anything..." onkeydown="if(event.key==='Enter')sendFullChat()">
+      <button class="chat-send" style="padding:7px 12px;font-size:10px" onclick="sendFullChat()">SEND ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- COMMUNITY -->
+<div class="page" id="page-community">
+  <div class="page-title">👥 COMMUNITY</div>
+  <div id="communityFeed"></div>
+</div>
+
+</div><!-- end main -->
 
 <!-- RIGHT PANEL -->
 <div class="right-panel">
-  <div class="rp-section">
+  <div class="rp-sec">
     <div class="rp-title">💪 Currency Strength</div>
-    <div class="strength-grid" id="strengthMeter"></div>
+    <div id="strengthMeter"></div>
   </div>
-  <div class="rp-section">
+  <div class="rp-sec">
     <div class="rp-title">😨 Fear & Greed</div>
-    <div style="text-align:center">
-      <svg viewBox="0 0 200 110" style="width:100%;max-width:180px">
-        <defs><linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ff3366"/><stop offset="50%" style="stop-color:#ffd700"/><stop offset="100%" style="stop-color:#00ff88"/></linearGradient></defs>
-        <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1a3a54" stroke-width="16" stroke-linecap="round"/>
-        <path id="gaugeFill" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="16" stroke-linecap="round" stroke-dasharray="157 251" style="transition:stroke-dasharray 1s"/>
-        <text id="fgLabel" x="100" y="75" text-anchor="middle" fill="#7fa8c8" font-size="10" font-family="Rajdhani">GREED</text>
-        <text id="fgVal" x="100" y="95" text-anchor="middle" fill="#ffd700" font-size="22" font-weight="700" font-family="Rajdhani">62</text>
-      </svg>
-    </div>
+    <svg class="fg-svg" viewBox="0 0 200 110">
+      <defs><linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ff3366"/><stop offset="50%" style="stop-color:#ffd700"/><stop offset="100%" style="stop-color:#00ff88"/></linearGradient></defs>
+      <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1a3a54" stroke-width="14" stroke-linecap="round"/>
+      <path id="gaugeFill" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="url(#gg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="157 251"/>
+      <text id="fgLabel" x="100" y="72" text-anchor="middle" fill="#7fa8c8" font-size="10" font-family="Rajdhani">GREED</text>
+      <text id="fgVal" x="100" y="92" text-anchor="middle" fill="#ffd700" font-size="22" font-weight="700" font-family="Rajdhani">62</text>
+    </svg>
   </div>
-  <div class="rp-section">
+  <div class="rp-sec">
     <div class="rp-title">🔥 Top Movers</div>
     <div id="topMovers"></div>
   </div>
-  <div class="rp-section">
-    <div class="rp-title">🌡 Volatility Heatmap</div>
-    <div class="heatmap-grid" id="heatmapGrid"></div>
+  <div class="rp-sec">
+    <div class="rp-title">🌡 Heatmap</div>
+    <div class="heat-grid" id="heatmapGrid"></div>
   </div>
-  <div class="rp-section">
+  <div class="rp-sec">
     <div class="rp-title">🤖 AI Quick Chat</div>
-    <div class="quick-btns">
-      <button class="quick-btn" onclick="sendChat('Why is gold moving?')">Gold?</button>
-      <button class="quick-btn" onclick="sendChat('Strongest currencies?')">Strongest?</button>
-      <button class="quick-btn" onclick="sendChat('Is EURUSD bullish?')">EUR/USD?</button>
-      <button class="quick-btn" onclick="sendChat('Best pair to trade?')">Best pair?</button>
+    <div class="qbtns">
+      <button class="qbtn" onclick="sendChat('Gold outlook?')">Gold?</button>
+      <button class="qbtn" onclick="sendChat('Strongest currency?')">Strongest?</button>
+      <button class="qbtn" onclick="sendChat('Best trade now?')">Best trade?</button>
     </div>
     <div class="chat-area" id="chatArea"></div>
-    <div class="chat-input-row">
-      <input id="chatInput" class="chat-input" placeholder="Ask AI..." onkeydown="if(event.key==='Enter')sendChat()">
+    <div class="chat-inp-row">
+      <input id="chatInput" class="chat-inp" placeholder="Ask AI..." onkeydown="if(event.key==='Enter')sendChat()">
       <button class="chat-send" onclick="sendChat()">↗</button>
     </div>
   </div>
-  <div class="rp-section">
+  <div class="rp-sec">
     <div class="rp-title">⏱ Upcoming Events</div>
     <div id="upcomingEvents"></div>
   </div>
 </div>
 
+</div><!-- end content-area -->
+
+<!-- BOTTOM NAV (mobile only) -->
+<div class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bnav-btn active" onclick="showPage('dashboard',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Dash</span>
+    </button>
+    <button class="bnav-btn" onclick="showPage('signals',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 3l7 7 4-4 7 7"/><path d="M21 3h-6M21 3v6"/></svg>
+      <span>Signals</span>
+    </button>
+    <button class="bnav-btn" onclick="showPage('news',this)">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+      <span>News</span>
+    </button>
+    <button class="bnav-btn" onclick="showPage('calendar',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span>Events</span>
+    </button>
+    <button class="bnav-btn" onclick="showPage('ai',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+      <span>AI</span>
+    </button>
+  </div>
 </div>
+
+</div><!-- end app -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
@@ -435,36 +540,25 @@ const API = 'https://forexpulse-pro.onrender.com/api';
 
 async function apiFetch(path) {
   try {
-    const r = await fetch(API + path);
+    const r = await fetch(API + path, {signal: AbortSignal.timeout(8000)});
     if (!r.ok) throw new Error(r.status);
     return await r.json();
   } catch(e) { return null; }
 }
 
-// ── DATA ──
-const BASE_PRICES = {"EUR/USD":1.1320,"GBP/USD":1.3450,"USD/JPY":159.15,"USD/CHF":0.8980,"AUD/USD":0.6480,"USD/CAD":1.3820,"NZD/USD":0.5920,"EUR/GBP":0.8410,"EUR/JPY":180.15,"GBP/JPY":214.05,"XAU/USD":3285.00,"BTC/USD":107500};
-let simPrices = {...BASE_PRICES};
+// ── BASE DATA ──
+const BASE = {"EUR/USD":1.16435,"GBP/USD":1.34930,"USD/JPY":158.952,"USD/CHF":0.78146,"AUD/USD":0.71679,"USD/CAD":1.38167,"NZD/USD":0.58721,"XAU/USD":4573.70,"BTC/USD":109250,"EUR/GBP":0.86304,"EUR/JPY":185.063,"GBP/JPY":214.43};
+let simP = {...BASE};
 let allNews = [];
 let currentFilter = 'all';
+let priceHistory = {};
+Object.keys(BASE).forEach(p => { priceHistory[p] = [BASE[p]]; });
 
+// ── SIMULATE ──
 function simPrice(pair) {
-  const f = pair==='XAU/USD'?0.0008:pair==='BTC/USD'?0.001:'JPY' in pair?0.0003:0.0002;
-  simPrices[pair] = simPrices[pair]*(1+(Math.random()-.5)*f);
-  return simPrices[pair];
-}
-
-// ── TICKER ──
-function buildTicker(priceData) {
-  const pairs = Object.keys(BASE_PRICES);
-  const items = pairs.map(pair => {
-    const price = priceData && priceData[pair] ? priceData[pair].price : simPrice(pair);
-    const pct = priceData && priceData[pair] ? priceData[pair].change_pct : ((price/BASE_PRICES[pair])-1)*100;
-    const cls = pct>=0?'up':'dn';
-    const fmt = pair==='BTC/USD'?'$'+Math.round(price).toLocaleString():pair==='XAU/USD'?price.toFixed(2):'JPY' in pair?price.toFixed(3):price.toFixed(5);
-    return `<span class="ticker-item"><span class="sym">${pair}</span><span class="price">${fmt}</span><span class="chg ${cls}">${pct>=0?'+':''}${pct.toFixed(2)}%</span></span>`;
-  }).join('');
-  const el = document.getElementById('tickerScroll');
-  if(el) el.innerHTML = items+items;
+  const f = pair==='XAU/USD'?0.0006:pair==='BTC/USD'?0.0008:pair.includes('JPY')?0.0003:0.0002;
+  simP[pair] = simP[pair] * (1 + (Math.random()-0.5)*f);
+  return simP[pair];
 }
 
 // ── CLOCKS ──
@@ -475,128 +569,196 @@ function updateClocks() {
   document.getElementById('t-london').textContent = fmt('Europe/London');
   document.getElementById('t-ny').textContent = fmt('America/New_York');
   document.getElementById('t-sydney').textContent = fmt('Australia/Sydney');
+  const h = now.getUTCHours();
+  ['tokyo','london','ny','sydney'].forEach(s=>document.getElementById('clk-'+s)?.classList.remove('active'));
+  if(h>=0&&h<8) document.getElementById('clk-tokyo')?.classList.add('active');
+  else if(h>=7&&h<16) document.getElementById('clk-london')?.classList.add('active');
+  else if(h>=13&&h<22) document.getElementById('clk-ny')?.classList.add('active');
+  else document.getElementById('clk-sydney')?.classList.add('active');
 }
 
-// ── MINI CHARTS ──
-const miniCharts = {};
-function initMiniCharts() {
-  [['chart-eurusd','#00d4ff',1.08621],['chart-gbpusd','#ff3366',1.27340],['chart-usdjpy','#00ff88',151.432],['chart-xauusd','#ffd700',2341.5]].forEach(([id,color,base])=>{
+// ── TICKER ──
+function buildTicker(priceData) {
+  const pairs = Object.keys(BASE);
+  const items = pairs.map(pair => {
+    const pd = priceData?.[pair];
+    const price = pd?.price || simPrice(pair);
+    const pct = pd?.change_pct || ((price/BASE[pair])-1)*100;
+    const cls = pct>=0?'up':'dn';
+    const fmt = pair==='BTC/USD'?'$'+Math.round(price).toLocaleString():pair==='XAU/USD'?price.toFixed(2):pair.includes('JPY')?price.toFixed(3):price.toFixed(5);
+    return `<span class="ticker-item"><span class="sym">${pair}</span><span class="price" style="color:var(--text2)">${fmt}</span><span class="chg ${cls}">${pct>=0?'+':''}${pct.toFixed(2)}%</span></span>`;
+  }).join('');
+  const el = document.getElementById('tickerScroll');
+  if(el) el.innerHTML = items+items;
+}
+
+// ── SPARKLINES ──
+const sparkCharts = {};
+function initSparklines() {
+  const configs = [
+    {id:'sp-EURUSD',pair:'EUR/USD',color:'#00d4ff'},
+    {id:'sp-GBPUSD',pair:'GBP/USD',color:'#00ff88'},
+    {id:'sp-USDJPY',pair:'USD/JPY',color:'#ffd700'},
+    {id:'sp-XAUUSD',pair:'XAU/USD',color:'#ff8800'},
+  ];
+  configs.forEach(({id,pair,color})=>{
     const el = document.getElementById(id);
     if(!el) return;
-    const data = Array.from({length:24},(_,i)=>base*(1+(Math.random()-.48)*0.003));
-    miniCharts[id] = new Chart(el,{
+    const base = BASE[pair];
+    const data = Array.from({length:20},()=>base*(1+(Math.random()-.48)*0.003));
+    sparkCharts[id] = new Chart(el,{
       type:'line',
-      data:{labels:Array(24).fill(''),datasets:[{data,borderColor:color,borderWidth:1.5,fill:true,backgroundColor:color+'18',tension:0.4,pointRadius:0}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}},animation:{duration:0}}
+      data:{labels:Array(20).fill(''),datasets:[{data,borderColor:color,borderWidth:1.5,fill:true,backgroundColor:color+'15',tension:0.4,pointRadius:0}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}},animation:{duration:300}}
     });
   });
 }
 
-function updateMiniCharts() {
-  Object.values(miniCharts).forEach(chart => {
-    const d = chart.data.datasets[0].data;
-    d.shift(); d.push(d[d.length-1]*(1+(Math.random()-.48)*0.002));
+function updateSparklines(priceData) {
+  const map = {'sp-EURUSD':'EUR/USD','sp-GBPUSD':'GBP/USD','sp-USDJPY':'USD/JPY','sp-XAUUSD':'XAU/USD'};
+  Object.entries(map).forEach(([id,pair])=>{
+    const chart = sparkCharts[id];
+    if(!chart) return;
+    const price = priceData?.[pair]?.price || simPrice(pair);
+    const data = chart.data.datasets[0].data;
+    data.shift(); data.push(price);
     chart.update('none');
   });
 }
 
-// ── PRICES ──
+// ── UPDATE PRICE CARDS ──
+let prevPrices = {};
+function updatePriceCards(priceData) {
+  const cards = {
+    'EURUSD': {pair:'EUR/USD', fmt: p=>p.toFixed(5)},
+    'GBPUSD': {pair:'GBP/USD', fmt: p=>p.toFixed(5)},
+    'USDJPY': {pair:'USD/JPY', fmt: p=>p.toFixed(3)},
+    'XAUUSD': {pair:'XAU/USD', fmt: p=>p.toFixed(2)},
+  };
+  Object.entries(cards).forEach(([key,{pair,fmt}])=>{
+    const pd = priceData?.[pair];
+    const price = pd?.price || simPrice(pair);
+    const pct = pd?.change_pct || ((price/BASE[pair])-1)*100;
+    const isUp = pct >= 0;
+    const card = document.getElementById('pc-'+key);
+    const valEl = document.getElementById('pv-'+key);
+    const chgEl = document.getElementById('pc2-'+key);
+    const sliderEl = document.getElementById('ps-'+key);
+    if(!card) return;
+    // Flash on price change
+    const prev = prevPrices[key];
+    if(prev !== undefined) {
+      if(price > prev) { card.classList.add('flash-up'); setTimeout(()=>card.classList.remove('flash-up'),600); }
+      else if(price < prev) { card.classList.add('flash-dn'); setTimeout(()=>card.classList.remove('flash-dn'),600); }
+    }
+    prevPrices[key] = price;
+    card.className = 'price-card '+(isUp?'up':'dn');
+    if(valEl) valEl.textContent = fmt(price);
+    if(chgEl) chgEl.textContent = (isUp?'▲ +':'▼ ')+pct.toFixed(2)+'%';
+    // Slider shows momentum (50% = neutral, >50% = bullish)
+    const sliderPct = Math.min(95, Math.max(5, 50 + pct * 15));
+    if(sliderEl) sliderEl.style.width = sliderPct+'%';
+  });
+  // Update gold/btc in header
+  const gold = priceData?.['XAU/USD']?.price || simP['XAU/USD'];
+  const btc = priceData?.['BTC/USD']?.price || simP['BTC/USD'];
+  const el1 = document.getElementById('goldPrice');
+  const el2 = document.getElementById('btcPrice');
+  if(el1) el1.textContent = '$'+gold.toFixed(2);
+  if(el2) el2.textContent = '$'+Math.round(btc).toLocaleString();
+}
+
+// ── FETCH + UPDATE PRICES ──
 async function updatePrices() {
   const data = await apiFetch('/prices');
   buildTicker(data);
-  if(data) {
-    const eu = data['EUR/USD']?.price || simPrices['EUR/USD'];
-    const gu = data['GBP/USD']?.price || simPrices['GBP/USD'];
-    const uj = data['USD/JPY']?.price || simPrices['USD/JPY'];
-    const xau = data['XAU/USD']?.price || simPrices['XAU/USD'];
-    document.getElementById('d-eurusd').textContent = eu.toFixed(5);
-    document.getElementById('d-gbpusd').textContent = gu.toFixed(5);
-    document.getElementById('d-usdjpy').textContent = uj.toFixed(3);
-    document.getElementById('d-xauusd').textContent = xau.toFixed(2);
-    document.getElementById('goldPrice').textContent = '$'+xau.toFixed(2);
-  }
-  const vol = 35+Math.random()*30;
-  document.getElementById('volFill').style.width = vol+'%';
-  document.getElementById('volPct').textContent = Math.round(vol)+'%';
+  updatePriceCards(data);
+  
+  return data;
 }
 
-// ── NEWS ──
+// ── NEWS FALLBACK ──
 const NEWS_FALLBACK = [
-  {title:"US Core PCE Inflation Rises 2.8% — Above Fed Target",source:"Reuters",published_at:"1m ago",currencies:["USD"],impact:"bullish",trade_bias:"EURUSD SELL",confidence:89,volatility_score:4,sentiment:"USD strengthening — Fed less likely to cut rates in June"},
-  {title:"ECB Cuts Rates 25bps, Signals Two More Cuts in 2025",source:"Bloomberg",published_at:"4m ago",currencies:["EUR"],impact:"bearish",trade_bias:"EURUSD SELL",confidence:85,volatility_score:4,sentiment:"EUR under pressure — ECB dovish pivot accelerates"},
-  {title:"Gold Breaks $3,300 — Safe Haven Demand Surges",source:"Reuters",published_at:"7m ago",currencies:["XAU","USD"],impact:"bullish",trade_bias:"XAUUSD BUY",confidence:91,volatility_score:5,sentiment:"Geopolitical tensions and USD weakness fueling gold rally"},
-  {title:"Bank of England Holds Rates at 4.5%, Hawkish Surprise",source:"FT",published_at:"12m ago",currencies:["GBP"],impact:"bullish",trade_bias:"GBPUSD BUY",confidence:82,volatility_score:3,sentiment:"GBP surges — BOE signals no cuts until Q4 2025"},
-  {title:"USD/JPY Approaches 160 — BOJ Intervention Risk Rises",source:"Nikkei",published_at:"18m ago",currencies:["JPY","USD"],impact:"bearish",trade_bias:"USDJPY SELL",confidence:79,volatility_score:4,sentiment:"JPY at critical level — verbal intervention expected soon"},
-  {title:"US Jobless Claims Beat at 201K — Labor Market Tight",source:"CNBC",published_at:"25m ago",currencies:["USD"],impact:"bullish",trade_bias:"DXY BUY",confidence:84,volatility_score:3,sentiment:"Strong labor market supports Fed hawkish stance"},
-  {title:"Australia RBA Cuts Rates 25bps — AUD Drops Sharply",source:"ABC News",published_at:"33m ago",currencies:["AUD"],impact:"bearish",trade_bias:"AUDUSD SELL",confidence:88,volatility_score:4,sentiment:"AUD weakens across the board after surprise RBA cut"},
-  {title:"Canada GDP Beats 2.4% — CAD Strengthens vs USD",source:"Globe & Mail",published_at:"41m ago",currencies:["CAD"],impact:"bullish",trade_bias:"USDCAD SELL",confidence:76,volatility_score:3,sentiment:"Strong Canadian data limits BOC easing expectations"},
-  {title:"Bitcoin Hits $108,000 — Risk Appetite Returns",source:"CoinDesk",published_at:"48m ago",currencies:["USD"],impact:"bearish",trade_bias:"EURUSD BUY",confidence:65,volatility_score:3,sentiment:"Risk-on sentiment — slight USD softness expected"},
-  {title:"China Manufacturing PMI Falls to 48.5 — NZD Hit Hard",source:"WSJ",published_at:"55m ago",currencies:["NZD","AUD"],impact:"bearish",trade_bias:"NZDUSD SELL",confidence:80,volatility_score:3,sentiment:"Commodity currencies under pressure on China slowdown"},
-  {title:"SNB Holds Rates — CHF Strengthens on Safe Haven Flows",source:"Reuters",published_at:"1h 5m ago",currencies:["CHF"],impact:"bullish",trade_bias:"USDCHF SELL",confidence:72,volatility_score:2,sentiment:"CHF supported — SNB less aggressive than expected"},
-  {title:"Fed Minutes: Officials Divided on Rate Cut Timing",source:"Bloomberg",published_at:"1h 20m ago",currencies:["USD"],impact:"neutral",trade_bias:"EURUSD NEUTRAL",confidence:70,volatility_score:3,sentiment:"Mixed signals — market awaiting next CPI print for direction"},
+  {title:"US-Iran War: Pentagon Briefs Trump on Military Strike Options — Gold Surges to $4,573",source:"Reuters",published_at:"2m ago",currencies:["USD","XAU"],impact:"bearish",trade_bias:"XAUUSD BUY",confidence:92,volatility_score:5,sentiment:"War fears driving USD selling and gold surge — safe haven demand at extreme levels"},
+  {title:"Eurozone PMI Contracts Unexpectedly in May at Fastest Pace Since Late 2023",source:"Bloomberg",published_at:"8m ago",currencies:["EUR"],impact:"bearish",trade_bias:"EURUSD SELL",confidence:85,volatility_score:4,sentiment:"EUR/USD at 1.1643 but ECB June cut now near certain after PMI shock"},
+  {title:"AUD Strongest Currency Today +0.57% — RBA Signals Pause After Recent Cut",source:"ABC News",published_at:"15m ago",currencies:["AUD"],impact:"bullish",trade_bias:"AUDUSD BUY",confidence:80,volatility_score:3,sentiment:"AUD leading G10 today — RBA pause signals stabilizing Australian economy"},
+  {title:"GBP/USD Holds Above 1.3490 — BOE Hawkish Stance Supporting Pound",source:"FT",published_at:"22m ago",currencies:["GBP"],impact:"bullish",trade_bias:"GBPUSD BUY",confidence:78,volatility_score:3,sentiment:"GBP +0.47% today — BOE holding rates at 4.5% keeping pound supported"},
+  {title:"USD/JPY Near 159.00 — BOJ Ultra-Loose Policy Keeping Yen Weak",source:"Nikkei",published_at:"28m ago",currencies:["JPY","USD"],impact:"bearish",trade_bias:"USDJPY BUY",confidence:82,volatility_score:3,sentiment:"JPY -0.14% today — BOJ refusing to tighten despite inflation above target"},
+  {title:"CHF Weakest Currency Today -0.43% After SNB Surprise Rate Cut",source:"Reuters",published_at:"35m ago",currencies:["CHF"],impact:"bearish",trade_bias:"USDCHF BUY",confidence:84,volatility_score:4,sentiment:"CHF -0.43% — SNB cut to 0% hitting franc across all major pairs today"},
+  {title:"Gold Eyes $4,580 Resistance as US-Iran Tensions Escalate Further",source:"Bloomberg",published_at:"42m ago",currencies:["XAU","USD"],impact:"bullish",trade_bias:"XAUUSD BUY",confidence:90,volatility_score:5,sentiment:"XAU/USD at $4,573 — analysts say $5,000 target now realistic given war premium"},
+  {title:"Fed Rate Hike Probability Rising — Market Pricing 15% Chance of June Hike",source:"CNBC",published_at:"50m ago",currencies:["USD"],impact:"bullish",trade_bias:"DXY BUY",confidence:76,volatility_score:3,sentiment:"USD recovering as Fed hike fears return amid war-driven inflation surge"},
+  {title:"NZD/USD Gains 0.38% — RBNZ Signals End of Rate Cut Cycle",source:"NZ Herald",published_at:"58m ago",currencies:["NZD"],impact:"bullish",trade_bias:"NZDUSD BUY",confidence:72,volatility_score:2,sentiment:"NZD finding support as RBNZ signals rates may have bottomed out"},
+  {title:"EUR/JPY Surges to 185.06 — EUR Strength vs JPY Weakness Combo Trade",source:"Bloomberg",published_at:"1h 5m ago",currencies:["EUR","JPY"],impact:"bullish",trade_bias:"EURJPY BUY",confidence:80,volatility_score:3,sentiment:"EUR/JPY +0.21% — dual driver of EUR positivity and BOJ ultra-loose policy"},
+  {title:"USD/CAD Falls as Oil Prices Jump on Middle East Supply Fears",source:"Globe & Mail",published_at:"1h 28m ago",currencies:["CAD","USD"],impact:"bearish",trade_bias:"USDCAD SELL",confidence:74,volatility_score:3,sentiment:"CAD supported by oil surge — Brent crude +2.1% on Strait of Hormuz fears"},
+  {title:"US Memorial Day — Thin Liquidity Expected, Volatility Risk High",source:"Reuters",published_at:"1h 45m ago",currencies:["USD"],impact:"neutral",trade_bias:"ALL PAIRS CAUTION",confidence:65,volatility_score:3,sentiment:"US markets closed today — expect thin liquidity and potential false breakouts"},
 ];
 
 function renderNewsCard(n) {
-  const analysis = n.ai_analysis || n;
-  const impact = analysis.impact || 'neutral';
-  const bias = analysis.trade_bias || n.trade_bias || 'NEUTRAL';
-  const conf = analysis.confidence || n.confidence || 70;
-  const vol = analysis.volatility_score || n.volatility_score || 2;
-  const sentiment = analysis.sentiment_summary || n.sentiment || '';
-  const currencies = n.currencies || analysis.affected_currencies || [];
-  const volDots = Array.from({length:5},(_,i)=>`<div class="vol-dot" style="width:5px;height:5px;border-radius:50%;background:${i<vol?'var(--orange)':'var(--bg4)'}"></div>`).join('');
-  return `<div class="news-card ${impact} alert-flash">
-    <div class="news-header">
+  const impact = n.impact || 'neutral';
+  const conf = n.confidence || 70;
+  const vol = n.volatility_score || 2;
+  const bias = n.trade_bias || 'WATCH';
+  const sentiment = n.sentiment || '';
+  const currencies = n.currencies || [];
+  const dots = Array.from({length:5},(_,i)=>`<span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${i<vol?'var(--orange)':'var(--bg4)'}"></span>`).join('');
+  return `<div class="news-card ${impact} flash">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px">
       <div class="news-title">${n.title}</div>
-      <div class="news-time">${n.published_at||n.time||'recently'}</div>
+      <span class="news-time" style="flex-shrink:0;margin-left:5px">${n.published_at||'recently'}</span>
     </div>
     <div class="news-meta">
-      <span class="tag source">${n.source}</span>
-      ${currencies.map(c=>`<span class="tag currency">${c}</span>`).join('')}
-      <span class="tag ${impact}">${impact.toUpperCase()}</span>
-      <span class="tag signal">⚡ ${bias}</span>
+      <span class="tag src">${n.source}</span>
+      ${currencies.map(c=>`<span class="tag curr">${c}</span>`).join('')}
+      <span class="tag ${impact==='bullish'?'bull':impact==='bearish'?'bear':''}">${impact.toUpperCase()}</span>
+      <span class="tag sig">⚡ ${bias}</span>
     </div>
     <div class="news-ai">
-      <span style="font-size:9px;color:var(--text3)">AI:</span>
-      <span style="font-size:9px;color:var(--text2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0 6px">${sentiment}</span>
-    </div>
-    <div class="news-ai" style="margin-top:4px">
-      <span style="font-size:9px;color:var(--text3)">CONF</span>
-      <div class="confidence-bar" style="margin:0 6px"><div class="confidence-fill" style="width:${conf}%"></div></div>
-      <span class="confidence-val">${conf}%</span>
-      <div style="display:flex;gap:2px;margin-left:8px">${volDots}</div>
+      <span style="color:var(--cyan);font-weight:700;flex-shrink:0">AI:</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0 5px">${sentiment}</span>
+      <div class="conf-bar"><div class="conf-fill" style="width:${conf}%"></div></div>
+      <span class="conf-val">${conf}%</span>
+      <div style="display:flex;gap:2px;margin-left:5px">${dots}</div>
     </div>
   </div>`;
 }
 
 async function loadNews() {
-  // Show fallback immediately so page is never empty
-  if(!allNews.length) {
-    allNews = NEWS_FALLBACK;
-    renderNewsFeed();
-    renderFullNewsFeed();
-    document.getElementById('news-count').textContent = allNews.length;
-  }
-  // Then try to get live data from API
+  // Show fallback immediately
+  allNews = NEWS_FALLBACK;
+  renderNewsFeed();
+  if(document.getElementById('fullNewsFeed')) renderFullNewsFeed();
+  document.getElementById('news-count').textContent = allNews.length;
+  // Try API
   const data = await apiFetch('/news?limit=20');
-  if(data && data.length) {
-    allNews = data;
+  if(data && data.length > 0) {
+    allNews = data.map(n => ({
+      title: n.title,
+      source: n.source,
+      published_at: n.published_at,
+      currencies: n.currencies || n.ai_analysis?.affected_currencies || ['USD'],
+      impact: n.ai_analysis?.impact || n.impact || 'neutral',
+      trade_bias: n.ai_analysis?.trade_bias || n.trade_bias || 'WATCH',
+      confidence: n.ai_analysis?.confidence || n.confidence || 70,
+      volatility_score: n.ai_analysis?.volatility_score || n.volatility_score || 2,
+      sentiment: n.ai_analysis?.sentiment_summary || n.sentiment || '',
+    }));
     renderNewsFeed();
-    renderFullNewsFeed();
+    if(document.getElementById('fullNewsFeed')) renderFullNewsFeed();
     document.getElementById('news-count').textContent = allNews.length;
   }
 }
 
 function filterNews(f, btn) {
   currentFilter = f;
-  document.querySelectorAll('.news-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.filters .fbtn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   renderNewsFeed();
 }
 
 function renderNewsFeed() {
-  const filtered = currentFilter==='all' ? allNews : allNews.filter(n=>(n.currencies||[]).includes(currentFilter)||(n.ai_analysis?.affected_currencies||[]).includes(currentFilter));
-  document.getElementById('newsFeed').innerHTML = filtered.map(renderNewsCard).join('');
+  const filtered = currentFilter==='all' ? allNews : allNews.filter(n=>(n.currencies||[]).includes(currentFilter));
+  const el = document.getElementById('newsFeed');
+  if(el) el.innerHTML = filtered.map(renderNewsCard).join('');
 }
 
 function renderFullNewsFeed() {
@@ -606,218 +768,210 @@ function renderFullNewsFeed() {
 
 // ── SIGNALS ──
 const SIGNALS_FALLBACK = [
-  {pair:"EUR/USD",direction:"SELL",entry:1.1320,tp1:1.1280,tp2:1.1230,sl:1.1360,confidence:87,risk_level:"LOW",reasons:["Bearish RSI divergence","USD inflation bullish","Price below 200 EMA","MACD bearish crossover"]},
-  {pair:"XAU/USD",direction:"BUY",entry:3285.00,tp1:3320.00,tp2:3360.00,sl:3250.00,confidence:91,risk_level:"LOW",reasons:["Geopolitical safe-haven demand","Fed pivot signals","Bull flag breakout","RSI 65 with room to run"]},
-  {pair:"GBP/JPY",direction:"BUY",entry:214.05,tp1:215.50,tp2:217.00,sl:212.80,confidence:82,risk_level:"MED",reasons:["Double bottom on H4","BoE hawkish tone","JPY weakness persists","Strong support at 192.00"]},
-  {pair:"USD/CHF",direction:"BUY",entry:0.8980,tp1:0.9020,tp2:0.9060,sl:0.8950,confidence:85,risk_level:"LOW",reasons:["SNB unexpected rate cut","CHF safe haven reversing","USD strength dominant","Target 0.9000 psych level"]},
-  {pair:"AUD/USD",direction:"SELL",entry:0.6480,tp1:0.6440,tp2:0.6400,sl:0.6520,confidence:79,risk_level:"HIGH",reasons:["China PMI disappointment","RBA cut priced in July","Risk-off environment","Break below 0.6550 support"]},
+  {pair:"EUR/USD",direction:"SELL",entry:1.1320,tp1:1.1280,tp2:1.1230,sl:1.1360,confidence:87,risk_level:"LOW",reasons:["Bearish RSI divergence at key resistance","USD strength on Fed hawkishness","Price rejected at 1.1350 resistance","MACD bearish crossover confirmed"]},
+  {pair:"XAU/USD",direction:"BUY",entry:3285.00,tp1:3320.00,tp2:3360.00,sl:3250.00,confidence:91,risk_level:"LOW",reasons:["Geopolitical safe-haven demand rising","Fed pivot signals supporting gold","Bull flag breakout on H4 chart","RSI 62 — room to run higher"]},
+  {pair:"GBP/JPY",direction:"BUY",entry:214.05,tp1:215.80,tp2:217.50,sl:212.80,confidence:83,risk_level:"MED",reasons:["Double bottom on H4 confirmed","BOE hawkish tone at last meeting","JPY weakness on GDP contraction","Strong support at 213.00"]},
+  {pair:"USD/CHF",direction:"BUY",entry:0.8980,tp1:0.9020,tp2:0.9060,sl:0.8945,confidence:85,risk_level:"LOW",reasons:["SNB rate cut weakening CHF","CHF safe haven flows reversing","USD strength dominant theme","Target 0.9000 psychological level"]},
+  {pair:"AUD/USD",direction:"SELL",entry:0.6480,tp1:0.6440,tp2:0.6400,sl:0.6520,confidence:79,risk_level:"MED",reasons:["China PMI disappointment bearish AUD","RBA rate cut priced in July","Risk-off environment persisting","Break below 0.6500 support confirmed"]},
 ];
 
 async function loadSignals() {
-  document.getElementById('signalsFeed').innerHTML = '<div style="color:var(--text3);font-size:11px;padding:10px">Loading signals...</div>';
+  const el = document.getElementById('signalsFeed');
+  if(!el) return;
+  el.innerHTML = '<div style="color:var(--text3);font-size:10px;padding:10px;text-align:center">⚡ Loading AI signals...</div>';
   const data = await apiFetch('/signals');
-  const signals = data && data.length ? data : SIGNALS_FALLBACK;
-  document.getElementById('signalsFeed').innerHTML = signals.map(s=>{
+  const signals = (data && data.length) ? data : SIGNALS_FALLBACK;
+  el.innerHTML = signals.map(s=>{
     const isUp = s.direction==='BUY';
-    const riskCls = s.risk_level==='LOW'?'risk-low':s.risk_level==='MED'||s.risk_level==='MEDIUM'?'risk-med':'risk-high';
+    const rCls = s.risk_level==='LOW'||s.risk_level==='low'?'color:var(--green)':s.risk_level==='HIGH'||s.risk_level==='high'?'color:var(--red)':'color:var(--orange)';
+    const conf = s.confidence || 75;
     return `<div class="signal-card ${isUp?'buy':'sell'}">
-      <div class="signal-header">
-        <div class="signal-pair" style="color:${isUp?'var(--green)':'var(--red)'}">${s.pair}</div>
-        <div style="display:flex;gap:6px;align-items:center">
-          <span class="signal-dir ${isUp?'buy':'sell'}">${s.direction}</span>
-          <span class="${riskCls}">${s.risk_level} RISK</span>
+      <div class="sig-header">
+        <div class="sig-pair" style="color:${isUp?'var(--green)':'var(--red)'}">${s.pair}</div>
+        <div style="display:flex;gap:5px;align-items:center">
+          <span class="sig-dir ${isUp?'buy':'sell'}">${s.direction}</span>
+          <span style="font-size:8px;font-weight:700;${rCls}">${s.risk_level} RISK</span>
         </div>
       </div>
-      <div class="signal-levels">
-        <div class="level entry"><div class="l-label">Entry</div><div class="l-val">${s.entry}</div></div>
-        <div class="level tp"><div class="l-label">TP1</div><div class="l-val">${s.tp1}</div></div>
-        <div class="level sl"><div class="l-label">Stop</div><div class="l-val">${s.sl}</div></div>
+      <div class="sig-levels">
+        <div class="lvl entry"><div class="ll">Entry</div><div class="lv">${s.entry}</div></div>
+        <div class="lvl tp"><div class="ll">TP1</div><div class="lv">${s.tp1}</div></div>
+        <div class="lvl sl"><div class="ll">Stop</div><div class="lv">${s.sl}</div></div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;margin:6px 0;padding:6px;background:var(--bg4);border-radius:5px">
-        <div class="conf-ring">${s.confidence}%</div>
-        <div style="flex:1"><div style="font-size:9px;color:var(--text3);margin-bottom:3px">AI CONFIDENCE</div><div class="progress-arc"><div class="progress-fill" style="width:${s.confidence}%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div></div>
-        <div class="level tp" style="padding:4px 8px"><div class="l-label">TP2</div><div class="l-val">${s.tp2}</div></div>
+      <div style="display:flex;align-items:center;gap:6px;padding:5px;background:var(--bg4);border-radius:5px;margin-bottom:5px">
+        <div style="width:32px;height:32px;border-radius:50%;border:2px solid ${isUp?'var(--green)':'var(--red)'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:${isUp?'var(--green)':'var(--red)'};flex-shrink:0">${conf}%</div>
+        <div style="flex:1">
+          <div style="font-size:8px;color:var(--text3);margin-bottom:2px">AI CONFIDENCE • TP2: ${s.tp2}</div>
+          <div class="prog"><div class="prog-fill" style="width:${conf}%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div>
+        </div>
       </div>
-      <div class="signal-reason">${(s.reasons||[]).map(r=>`<div class="reason-item"><div class="reason-dot"></div>${r}</div>`).join('')}</div>
+      <div class="sig-reason">${(s.reasons||[]).map(r=>`<div style="display:flex;align-items:flex-start;gap:4px;margin-bottom:2px"><span class="rdot"></span>${r}</div>`).join('')}</div>
     </div>`;
   }).join('');
 }
 
 // ── ANALYSIS ──
-const INDICATORS_FALLBACK = [
+const IND_FALLBACK = [
   {name:"RSI (14)",value:"58.4",signal:"bull",progress:58},{name:"MACD",value:"+0.0021",signal:"bull",progress:72},
-  {name:"Bollinger Bands",value:"MID BAND",signal:"neut",progress:50},{name:"EMA 20/50/200",value:"GOLDEN CROSS",signal:"bull",progress:80},
-  {name:"Stochastic",value:"64.2",signal:"neut",progress:64},{name:"CCI (20)",value:"+112",signal:"bull",progress:78},
-  {name:"Williams %R",value:"-28.4",signal:"bull",progress:72},{name:"Momentum",value:"+0.003",signal:"bull",progress:68},
-  {name:"ATR (Volatility)",value:"0.0082 [MED]",signal:"neut",progress:45},{name:"SMA 20",value:"ABOVE SMA",signal:"bull",progress:65},
+  {name:"Bollinger Bands",value:"MID BAND",signal:"neut",progress:50},{name:"EMA 20/50",value:"GOLDEN CROSS",signal:"bull",progress:80},
+  {name:"Trend",value:"UPTREND",signal:"bull",progress:70},{name:"EMA 200",value:"ABOVE",signal:"bull",progress:75},
 ];
 
 async function loadAnalysis() {
-  const pair = document.getElementById('ta-pair').value;
-  const tf = document.getElementById('ta-tf').value;
-  const data = await apiFetch(`/analysis/${pair.replace('//','-').replace('/','-')}?timeframe=${tf}`);
-
-  const indicators = data?.indicators || INDICATORS_FALLBACK;
-  const score = data?.ai_score || 74;
+  const pair = document.getElementById('ta-pair')?.value || 'EUR/USD';
+  const tf = document.getElementById('ta-tf')?.value || 'H4';
+  const data = await apiFetch(`/analysis/${pair.replace('/','').replace('/','')}-USD?timeframe=${tf}`) || 
+               await apiFetch(`/analysis/${pair.replace('/','-')}?timeframe=${tf}`);
+  const inds = data?.indicators || IND_FALLBACK;
+  const score = data?.ai_score || 72;
   const overall = data?.overall_signal || 'BULLISH';
-  const bc = data?.buy_count || 7; const sc = data?.sell_count || 2; const nc = data?.neutral_count || 1;
+  const bc = data?.buy_count || 5; const sc = data?.sell_count || 1;
   const color = overall==='BULLISH'?'var(--green)':overall==='BEARISH'?'var(--red)':'var(--gold)';
-
-  document.getElementById('ta-score').textContent = score;
-  document.getElementById('ta-score').style.color = color;
-  document.getElementById('ta-verdict').textContent = `OVERALL: ${overall} — ${pair} ${tf}`;
-  document.getElementById('ta-verdict').style.color = color;
-  document.getElementById('ta-counts').textContent = `${bc} Buy / ${sc} Sell / ${nc} Neutral`;
-
-  document.getElementById('indicatorGrid').innerHTML = indicators.map(ind=>{
+  if(document.getElementById('ta-score')) { document.getElementById('ta-score').textContent=score; document.getElementById('ta-score').style.color=color; }
+  if(document.getElementById('ta-verdict')) { document.getElementById('ta-verdict').textContent=`${overall} — ${pair} ${tf}`; document.getElementById('ta-verdict').style.color=color; }
+  if(document.getElementById('ta-counts')) document.getElementById('ta-counts').textContent=`${bc} Buy / ${sc} Sell`;
+  const grid = document.getElementById('indicatorGrid');
+  if(grid) grid.innerHTML = inds.map(ind=>{
     const c = ind.signal==='bull'?'var(--green)':ind.signal==='bear'?'var(--red)':'var(--text3)';
     const fill = ind.signal==='bull'?'#00ff88':ind.signal==='bear'?'#ff3366':'#4a7090';
-    const label = ind.signal==='bull'?'BULLISH':ind.signal==='bear'?'BEARISH':'NEUTRAL';
-    return `<div class="indicator-card">
-      <div class="ind-header"><div class="ind-name">${ind.name}</div><span class="ind-signal ${ind.signal}">${label}</span></div>
+    return `<div class="ind-card">
+      <div class="ind-hdr"><div class="ind-name">${ind.name}</div><span class="ind-sig ${ind.signal}">${ind.signal==='bull'?'BUY':ind.signal==='bear'?'SELL':'NEUT'}</span></div>
       <div class="ind-val" style="color:${c}">${ind.value}</div>
-      <div class="progress-arc"><div class="progress-fill" style="width:${ind.progress}%;background:${fill}"></div></div>
+      <div class="prog"><div class="prog-fill" style="width:${ind.progress}%;background:${fill}"></div></div>
     </div>`;
   }).join('');
-
-  const patterns = data?.patterns || [{name:"Bullish Engulfing",type:"bullish",confidence:84},{name:"Pin Bar",type:"bullish",confidence:76},{name:"Higher Lows",type:"bullish",confidence:72}];
-  document.getElementById('patterns-detected').innerHTML = patterns.map(p=>`<div class="tag ${p.type==='bullish'?'bullish':'neutral'}" style="padding:4px 8px;font-size:10px">${p.name} <span style="opacity:.7">${p.confidence}%</span></div>`).join('');
-
-  const smc = data?.smc || [{concept:"BOS",description:"Break of Structure — Bullish confirmed",bias:"bullish"},{concept:"Order Block",description:`Bullish OB @ ${(simPrices['EUR/USD']*0.999).toFixed(5)}`,bias:"bullish"},{concept:"FVG",description:"Fair Value Gap identified",bias:"bullish"},{concept:"Liquidity",description:"Buy-side liquidity above recent highs",bias:"neutral"}];
-  document.getElementById('smc-analysis').innerHTML = smc.map(s=>{
-    const c = s.bias==='bullish'?'var(--green)':s.bias==='bearish'?'var(--red)':'var(--text3)';
-    return `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border2);font-size:10px"><span style="color:var(--text3)">${s.concept}</span><span style="color:${c};font-weight:600">${s.description}</span></div>`;
-  }).join('');
+  const pats = data?.patterns || [{name:"Bullish Engulfing",type:"bullish",confidence:84},{name:"Higher Lows",type:"bullish",confidence:76}];
+  const pel = document.getElementById('patterns-detected');
+  if(pel) pel.innerHTML = pats.map(p=>`<div class="tag ${p.type==='bullish'?'bull':'bear'}" style="padding:3px 7px;font-size:9px">${p.name} ${p.confidence}%</div>`).join('');
+  const smc = data?.smc || [{concept:"BOS",description:"Bullish Break of Structure confirmed",bias:"bullish"},{concept:"Order Block",description:"Bullish OB identified below current price",bias:"bullish"}];
+  const sel = document.getElementById('smc-analysis');
+  if(sel) sel.innerHTML = smc.map(s=>{const c=s.bias==='bullish'?'var(--green)':s.bias==='bearish'?'var(--red)':'var(--text3)';return `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border2);font-size:9px"><span style="color:var(--text3)">${s.concept}</span><span style="color:${c};font-weight:600">${s.description}</span></div>`;}).join('');
 }
 
 // ── CALENDAR ──
-const CALENDAR_FALLBACK = [
-  {time:"14:30",event:"US Core CPI m/m",currency:"USD",impact:"high",forecast:"0.3%",previous:"0.4%",countdown:"2h 14m"},
-  {time:"15:00",event:"ISM Manufacturing PMI",currency:"USD",impact:"med",forecast:"49.5",previous:"49.2",countdown:"2h 44m"},
-  {time:"16:00",event:"Fed Bowman Speech",currency:"USD",impact:"high",forecast:"—",previous:"—",countdown:"3h 30m"},
-  {time:"18:00",event:"ECB Lane Speech",currency:"EUR",impact:"med",forecast:"—",previous:"—",countdown:"5h 14m"},
-  {time:"20:00",event:"FOMC Meeting Minutes",currency:"USD",impact:"high",forecast:"—",previous:"—",countdown:"7h 00m"},
-  {time:"02:30",event:"China Caixin PMI",currency:"AUD",impact:"med",forecast:"51.0",previous:"51.4",countdown:"13h 14m"},
-  {time:"09:30",event:"UK GDP m/m",currency:"GBP",impact:"high",forecast:"0.1%",previous:"-0.1%",countdown:"20h 00m"},
-];
 async function loadCalendar() {
   const data = await apiFetch('/calendar');
-  const events = data && data.length ? data : CALENDAR_FALLBACK;
+  const events = data && data.length ? data : [];
   const el = document.getElementById('econCalendar');
-  if(!el) return;
-  el.innerHTML = events.map(e=>`
-    <div class="card" style="margin-bottom:8px">
+  if(el) el.innerHTML = (events.length ? events : [
+    {time:"14:30",event:"US Core CPI m/m",currency:"USD",impact:"high",forecast:"0.3%",previous:"0.4%",countdown:"2h 14m",ai_prediction:"High volatility. Widen stops before release."},
+    {time:"16:00",event:"Fed Powell Speech",currency:"USD",impact:"high",forecast:"—",previous:"—",countdown:"3h 44m",ai_prediction:"Watch for rate cut signals. USD volatility expected."},
+    {time:"18:00",event:"ECB Rate Decision",currency:"EUR",impact:"high",forecast:"3.40%",previous:"3.65%",countdown:"5h 14m",ai_prediction:"EUR volatility — cut expected, watch forward guidance."},
+  ]).map(e=>`
+    <div class="card" style="margin-bottom:7px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
         <div>
-          <div style="font-size:13px;font-weight:600">${e.event}</div>
-          <div style="display:flex;gap:6px;margin-top:4px;align-items:center">
-            <span class="tag currency">${e.currency}</span>
-            <span class="econ-impact ${e.impact}">${e.impact.toUpperCase()}</span>
-            <span style="font-size:10px;color:var(--text3)">at ${e.time}</span>
+          <div style="font-size:12px;font-weight:600;color:var(--text)">${e.event}</div>
+          <div style="display:flex;gap:5px;margin-top:4px;align-items:center;flex-wrap:wrap">
+            <span class="tag curr">${e.currency}</span>
+            <span class="imp ${e.impact}">${e.impact?.toUpperCase()}</span>
+            <span style="font-size:9px;color:var(--text3)">at ${e.time} UTC</span>
           </div>
         </div>
-        <div style="text-align:right">
-          <div style="font-size:10px;color:var(--text3)">Forecast: <span style="color:var(--text2)">${e.forecast}</span></div>
-          <div style="font-size:10px;color:var(--text3)">Previous: <span style="color:var(--text2)">${e.previous}</span></div>
-          <div style="font-size:9px;color:var(--cyan);margin-top:4px">⏱ ${e.countdown}</div>
+        <div style="text-align:right;flex-shrink:0;margin-left:8px">
+          <div style="font-size:9px;color:var(--text3)">Forecast: <span style="color:var(--text2)">${e.forecast}</span></div>
+          <div style="font-size:9px;color:var(--text3)">Previous: <span style="color:var(--text2)">${e.previous}</span></div>
+          <div style="font-size:9px;color:var(--cyan);margin-top:3px;font-family:'Share Tech Mono',monospace">⏱ ${e.countdown}</div>
         </div>
       </div>
+      ${e.ai_prediction?`<div style="margin-top:6px;padding:5px;background:var(--bg4);border-radius:4px;font-size:9px;color:var(--text3)">🤖 AI: ${e.ai_prediction}</div>`:''}
     </div>`).join('');
 
-  const upEl = document.getElementById('upcomingEvents');
-  if(upEl) upEl.innerHTML = events.slice(0,4).map(e=>`
+  // Right panel upcoming
+  const uel = document.getElementById('upcomingEvents');
+  if(uel && events.length) uel.innerHTML = events.slice(0,4).map(e=>`
     <div class="econ-item">
       <div class="econ-time">${e.time}</div>
-      <div class="econ-body"><div class="econ-event">${e.event}</div><div class="econ-curr">${e.currency}</div></div>
-      <span class="econ-impact ${e.impact}">${e.impact.toUpperCase()}</span>
-      <span class="countdown">${e.countdown}</span>
+      <div class="econ-body"><div class="econ-ev">${e.event}</div><div class="econ-cu">${e.currency}</div></div>
+      <span class="imp ${e.impact}">${e.impact?.slice(0,3).toUpperCase()}</span>
+      <span class="cntd">${e.countdown}</span>
     </div>`).join('');
 }
 
 // ── STRENGTH ──
-const STRENGTH_FALLBACK = {USD:72,EUR:58,GBP:52,JPY:35,AUD:48,CAD:61,NZD:42,CHF:55};
-function renderStrengthData(strength) {
-  const cont = document.getElementById('strengthMeter');
-  if(!cont) return;
+async function loadStrength() {
+  const data = await apiFetch('/prices/strength');
+  const strength = data || {USD:72,EUR:58,GBP:52,JPY:35,AUD:48,CAD:61,NZD:42,CHF:55};
+  const el = document.getElementById('strengthMeter');
+  if(!el) return;
   const sorted = Object.entries(strength).sort((a,b)=>b[1]-a[1]);
-  cont.innerHTML = sorted.map(([curr,val])=>{
+  el.innerHTML = sorted.map(([curr,val])=>{
     const color = val>=65?'var(--green)':val>=50?'var(--cyan)':val>=40?'var(--orange)':'var(--red)';
-    return '<div class="strength-row"><span class="str-label">'+curr+'</span><div class="str-bar"><div class="str-fill" style="width:'+val+'%;background:'+color+'"></div></div><span class="str-val" style="color:'+color+'">'+Math.round(val)+'</span></div>';
+    return `<div class="str-row"><span class="str-lbl">${curr}</span><div class="str-bar"><div class="str-fill" style="width:${val}%;background:${color}"></div></div><span class="str-val" style="color:${color}">${Math.round(val)}</span></div>`;
   }).join('');
 }
-async function loadStrength() {
-  renderStrengthData(STRENGTH_FALLBACK);
-  const data = await apiFetch('/prices/strength');
-  if(data && Object.keys(data).length) renderStrengthData(data);
+
+// ── MOVERS ──
+async function loadMovers() {
+  const data = await apiFetch('/prices/movers?n=5');
+  const movers = data || [{pair:'XAU/USD',price:3285,change_pct:0.45},{pair:'USD/JPY',price:159.15,change_pct:0.28},{pair:'EUR/USD',price:1.1320,change_pct:0.18},{pair:'NZD/USD',price:0.5920,change_pct:-0.22}];
+  const el = document.getElementById('topMovers');
+  if(!el) return;
+  el.innerHTML = movers.map(m=>{
+    const isUp=m.change_pct>=0;
+    const fmt=m.pair==='XAU/USD'?m.price?.toFixed(2):m.pair==='BTC/USD'?'$'+Math.round(m.price).toLocaleString():m.pair?.includes('JPY')?m.price?.toFixed(3):m.price?.toFixed(5);
+    return `<div class="mover-row"><span style="font-weight:600;font-size:9px">${m.pair}</span><span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text2)">${fmt}</span><span style="font-size:9px;font-weight:700;color:${isUp?'var(--green)':'var(--red)'}">${isUp?'+':''}${m.change_pct?.toFixed(2)}%</span></div>`;
+  }).join('');
 }
 
 // ── HEATMAP ──
 function renderHeatmap() {
   const pairs = [
-    {name:'EUR/USD',chg:0.21},{name:'GBP/USD',chg:-0.14},{name:'USD/JPY',chg:0.21},{name:'AUD/USD',chg:-0.32},
-    {name:'USD/CHF',chg:0.18},{name:'USD/CAD',chg:0.08},{name:'NZD/USD',chg:-0.25},{name:'XAU/USD',chg:0.36},
-  ].map(p=>({...p,chg:p.chg+(Math.random()-.5)*0.05}));
-  const cont = document.getElementById('heatmapGrid');
-  if(!cont) return;
-  cont.innerHTML = pairs.map(p=>{
+    {n:'EUR/USD',c:simP['EUR/USD']},{n:'GBP/USD',c:simP['GBP/USD']},
+    {n:'USD/JPY',c:simP['USD/JPY']},{n:'AUD/USD',c:simP['AUD/USD']},
+    {n:'USD/CHF',c:simP['USD/CHF']},{n:'USD/CAD',c:simP['USD/CAD']},
+    {n:'NZD/USD',c:simP['NZD/USD']},{n:'XAU/USD',c:simP['XAU/USD']},
+  ].map(p=>({...p,chg:((p.c/BASE[p.n])-1)*100}));
+  const el = document.getElementById('heatmapGrid');
+  if(!el) return;
+  el.innerHTML = pairs.map(p=>{
     const isUp=p.chg>=0;
-    const bg=isUp?`rgba(0,255,136,${0.1+Math.abs(p.chg)*0.3})`:`rgba(255,51,102,${0.1+Math.abs(p.chg)*0.3})`;
+    const bg=isUp?`rgba(0,255,136,${0.08+Math.abs(p.chg)*0.3})`:`rgba(255,51,102,${0.08+Math.abs(p.chg)*0.3})`;
     const border=isUp?`rgba(0,255,136,.4)`:`rgba(255,51,102,.4)`;
     const color=isUp?'var(--green)':'var(--red)';
-    return `<div class="heat-cell" style="background:${bg};border:1px solid ${border}"><div class="pair" style="font-size:7px;color:rgba(255,255,255,.5)">${p.name.replace('/','/')}</div><div class="change" style="color:${color}">${p.chg>=0?'+':''}${p.chg.toFixed(2)}%</div></div>`;
-  }).join('');
-}
-
-// ── TOP MOVERS ──
-async function loadMovers() {
-  const data = await apiFetch('/prices/movers?n=5');
-  const movers = data || [{pair:'XAU/USD',price:3285.00,change_pct:0.45},{pair:'USD/JPY',price:159.15,change_pct:0.28},{pair:'EUR/USD',price:1.1320,change_pct:0.18},{pair:'NZD/USD',price:0.5920,change_pct:-0.22},{pair:'AUD/USD',price:0.6480,change_pct:-0.31}];
-  const cont = document.getElementById('topMovers');
-  if(!cont) return;
-  cont.innerHTML = movers.map(m=>{
-    const isUp=m.change_pct>=0;
-    const fmt = m.pair==='XAU/USD'?m.price.toFixed(2):'JPY' in m.pair?m.price.toFixed(3):m.price.toFixed(5);
-    return `<div class="mover-item"><span class="mover-pair">${m.pair}</span><span class="mover-price">${fmt}</span><span class="mover-chg ${isUp?'up':'dn'}">${isUp?'+':''}${m.change_pct.toFixed(2)}%</span></div>`;
+    return `<div class="heat-cell" style="background:${bg};border:1px solid ${border}"><div class="hp">${p.n.replace('/','/​')}</div><div style="color:${color}">${p.chg>=0?'+':''}${p.chg.toFixed(2)}%</div></div>`;
   }).join('');
 }
 
 // ── FEAR GREED ──
 function updateFearGreed() {
-  const val = 52+Math.floor(Math.random()*20);
-  document.getElementById('fgVal').textContent = val;
-  const fill = (val/100)*251;
-  document.getElementById('gaugeFill').setAttribute('stroke-dasharray',`${fill} ${251-fill}`);
-  document.getElementById('fgLabel').textContent = val>=75?'EXTREME GREED':val>=55?'GREED':val>=45?'NEUTRAL':val>=25?'FEAR':'EXTREME FEAR';
+  const val = 52+Math.floor(Math.random()*18);
+  const el = document.getElementById('fgVal');
+  const lel = document.getElementById('fgLabel');
+  const fel = document.getElementById('gaugeFill');
+  if(el) el.textContent = val;
+  if(lel) lel.textContent = val>=75?'EXTREME GREED':val>=55?'GREED':val>=45?'NEUTRAL':val>=25?'FEAR':'EXTREME FEAR';
+  if(fel) { const fill=(val/100)*251; fel.setAttribute('stroke-dasharray',`${fill} ${251-fill}`); }
 }
 
 // ── COMMUNITY ──
 function loadCommunity() {
   const posts = [
-    {user:"TraderKing92",avatar:"TK",pair:"EUR/USD",dir:"SELL",text:"Classic double top on H4. Entry confirmed after 1.0850 break. TP 1.0790.",likes:47,comments:12,time:"8m ago",verified:true},
-    {user:"FX_Maestro",avatar:"FM",pair:"XAU/USD",dir:"BUY",text:"Gold still in bull market structure. Accumulation zone 2320-2340. Target 2400+.",likes:89,comments:23,time:"15m ago",verified:true},
-    {user:"PipHunter",avatar:"PH",pair:"GBP/JPY",dir:"BUY",text:"BoE hawkish + JPY weak = GBPJPY rocket fuel. Already up 80 pips today!",likes:34,comments:8,time:"32m ago",verified:false},
-    {user:"SMC_Trader",avatar:"ST",pair:"USD/CAD",dir:"SELL",text:"Bearish OB at 1.3690. ICT concepts pointing to 1.3600 downside target.",likes:61,comments:18,time:"1h ago",verified:true},
+    {user:"TraderKing_NG",avatar:"TK",pair:"EUR/USD",dir:"SELL",text:"Classic double top on H4. Entry at 1.1350, targeting 1.1270. Risk/reward 2.5:1 🎯",likes:47,comments:12,time:"8m ago",verified:true},
+    {user:"FX_Maestro",avatar:"FM",pair:"XAU/USD",dir:"BUY",text:"Gold still in bull market structure. Accumulation zone $3,250-$3,280. Target $3,400+",likes:89,comments:23,time:"15m ago",verified:true},
+    {user:"PipHunter",avatar:"PH",pair:"GBP/JPY",dir:"BUY",text:"BOE hawkish + JPY weak = GBPJPY rocket fuel! Already up 120 pips today 🚀",likes:34,comments:8,time:"32m ago",verified:false},
+    {user:"CitizenTrader",avatar:"CT",pair:"USD/CAD",dir:"SELL",text:"Bearish OB at 1.3840. ICT concepts pointing to 1.3750 downside target.",likes:61,comments:18,time:"1h ago",verified:true},
   ];
-  const cont = document.getElementById('communityFeed');
-  if(!cont) return;
-  cont.innerHTML = posts.map(p=>`
-    <div class="news-card neutral" style="margin-bottom:8px">
-      <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px">
-        <div style="width:32px;height:32px;border-radius:50%;background:rgba(0,212,255,.15);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--cyan);flex-shrink:0">${p.avatar}</div>
+  const el = document.getElementById('communityFeed');
+  if(!el) return;
+  el.innerHTML = posts.map(p=>`
+    <div class="post-card">
+      <div style="display:flex;gap:7px;align-items:flex-start;margin-bottom:7px">
+        <div class="post-avatar">${p.avatar}</div>
         <div style="flex:1">
-          <div style="display:flex;align-items:center;gap:5px">
+          <div style="display:flex;align-items:center;gap:4px">
             <span style="font-size:11px;font-weight:600">${p.user}</span>
             ${p.verified?'<span style="color:var(--cyan);font-size:10px">✓</span>':''}
-            <span style="font-size:10px;color:var(--text3);margin-left:auto">${p.time}</span>
+            <span style="font-size:9px;color:var(--text3);margin-left:auto">${p.time}</span>
           </div>
-          <div style="display:flex;gap:4px;margin-top:3px">
-            <span class="tag currency">${p.pair}</span>
-            <span class="tag ${p.dir==='BUY'?'bullish':'bearish'}">${p.dir}</span>
+          <div style="display:flex;gap:3px;margin-top:3px">
+            <span class="tag curr">${p.pair}</span>
+            <span class="tag ${p.dir==='BUY'?'bull':'bear'}">${p.dir}</span>
           </div>
         </div>
       </div>
-      <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">${p.text}</div>
-      <div style="display:flex;gap:10px;font-size:10px;color:var(--text3)">
+      <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:7px">${p.text}</div>
+      <div style="display:flex;gap:10px;font-size:10px">
         <button style="background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer" onclick="this.style.color='var(--green)'">♥ ${p.likes}</button>
         <button style="background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer">💬 ${p.comments}</button>
         <button style="background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;margin-left:auto">+ Follow</button>
@@ -826,28 +980,30 @@ function loadCommunity() {
 }
 
 // ── AI CHAT ──
-const AI_FALLBACK = {
-  gold:"Gold at $2,341 — rallying on geopolitical tensions and declining real yields. DXY softness also supporting. Key resistance: $2,365. Break above targets $2,400.",
-  eur:"EUR/USD bearish — ECB June cut at 78% probability. USD strength dominant. Bias: SELL rallies toward 1.0880. Support: 1.0790.",
-  gbp:"GBP mixed — BoE hawkish but CPI at 2.3% below target limits upside. GBP/JPY BUY offers better opportunity than cable.",
-  strong:"Strength today: USD(72) leads on Fed hawkishness. CAD(63) on oil. JPY(38) and GBP(45) weakest. Favor USD longs.",
-  best:"Top picks: 1) XAU/USD BUY (91%) 2) USD/CHF BUY (85%) 3) GBP/JPY BUY (82%)",
-  default:"USD dominant across the board. EUR/USD under pressure. Gold maintaining bullish structure. Watch upcoming US data releases for volatility."
+const AI_LOCAL = {
+  gold:"Gold at $4,573 — surging on US-Iran war escalation and safe-haven demand. Today's range: $4,531–$4,579. Key resistance: $4,580. Break above targets $4,650+. Analysts see $5,000 by year end.",
+  eur:"EUR/USD at 1.1643 today. Eurozone PMI showed unexpected contraction in May — fastest pace since late 2023. ECB June cut likely. Bias: SELL rallies toward 1.1650. Support: 1.1600, Resistance: 1.1680.",
+  gbp:"GBP mixed — BOE hawkish but UK CPI softening. GBP/JPY BUY offers better opportunity on JPY weakness. Watch 1.3400 support on cable.",
+  strong:"May 25 strength: AUD(+0.57%) and NZD(+0.38%) lead today. EUR(+0.37%) and GBP(+0.47%) positive. JPY(-0.14%) and CHF(-0.43%) weakest. Favor AUD longs vs CHF and JPY shorts.",
+  best:"Today's top picks: 1) XAU/USD BUY at 4573 — war premium driving gold higher (91%). 2) AUD/USD BUY at 0.7168 — strongest currency today (+0.57%) (82%). 3) EUR/JPY BUY at 185.06 — EUR strength vs JPY weakness (79%).",
+  smc:"Smart Money Concepts: Look for Break of Structure (BOS), Order Blocks (OB), Fair Value Gaps (FVG). Trade discount zones for buys, premium zones for sells.",
+  default:"USD dominant across the board. EUR/USD under pressure, Gold maintaining bullish structure above $3,280. Watch upcoming central bank events for volatility."
 };
 
 function getLocalAI(msg) {
   const m = msg.toLowerCase();
-  if(m.includes('gold')||m.includes('xau')) return AI_FALLBACK.gold;
-  if(m.includes('eur')) return AI_FALLBACK.eur;
-  if(m.includes('gbp')||m.includes('pound')) return AI_FALLBACK.gbp;
-  if(m.includes('strong')||m.includes('strength')) return AI_FALLBACK.strong;
-  if(m.includes('best')||m.includes('pair')) return AI_FALLBACK.best;
-  return AI_FALLBACK.default;
+  if(m.includes('gold')||m.includes('xau')) return AI_LOCAL.gold;
+  if(m.includes('eur')) return AI_LOCAL.eur;
+  if(m.includes('gbp')||m.includes('pound')) return AI_LOCAL.gbp;
+  if(m.includes('strong')||m.includes('strength')) return AI_LOCAL.strong;
+  if(m.includes('best')||m.includes('pair')) return AI_LOCAL.best;
+  if(m.includes('smc')||m.includes('smart money')) return AI_LOCAL.smc;
+  return AI_LOCAL.default;
 }
 
 async function callAI(msg) {
   try {
-    const r = await fetch(API+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,history:[]})});
+    const r = await fetch(API+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,history:[]}),signal:AbortSignal.timeout(10000)});
     if(!r.ok) throw new Error();
     const d = await r.json();
     return d.reply || getLocalAI(msg);
@@ -857,81 +1013,83 @@ async function callAI(msg) {
 async function sendChat(preMsg) {
   const input = document.getElementById('chatInput');
   const area = document.getElementById('chatArea');
-  const msg = preMsg || input.value.trim();
-  if(!msg) return;
-  if(!preMsg) input.value = '';
-  area.innerHTML += `<div class="chat-msg user">${msg}</div>`;
-  area.innerHTML += `<div class="chat-msg ai" id="mini-typing"><div class="ai-label">AI</div><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  const msg = preMsg || input?.value?.trim();
+  if(!msg||!area) return;
+  if(!preMsg && input) input.value = '';
+  area.innerHTML += `<div class="cmsg user">${msg}</div>`;
+  area.innerHTML += `<div class="cmsg ai" id="mini-typing"><div class="ailbl">AI</div><div class="typing"><span></span><span></span><span></span></div></div>`;
   area.scrollTop = area.scrollHeight;
   const reply = await callAI(msg);
   const t = document.getElementById('mini-typing');
-  if(t) t.innerHTML = `<div class="ai-label">AI</div>${reply}`;
+  if(t) t.innerHTML = `<div class="ailbl">CitizensForex AI</div>${reply}`;
   area.scrollTop = area.scrollHeight;
 }
 
 async function sendFullChat(preMsg) {
   const input = document.getElementById('fullChatInput');
   const area = document.getElementById('fullChatArea');
-  const msg = preMsg || input.value.trim();
-  if(!msg) return;
-  if(!preMsg) input.value = '';
-  area.innerHTML += `<div class="chat-msg user" style="font-size:12px;padding:8px 10px">${msg}</div>`;
-  area.innerHTML += `<div class="chat-msg ai" id="full-typing" style="font-size:11px;padding:8px 10px"><div class="ai-label" style="font-size:10px">AI ANALYST</div><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  const msg = preMsg || input?.value?.trim();
+  if(!msg||!area) return;
+  if(!preMsg && input) input.value = '';
+  area.innerHTML += `<div class="cmsg user" style="font-size:11px;padding:6px 9px">${msg}</div>`;
+  area.innerHTML += `<div class="cmsg ai" id="full-typing" style="font-size:10px;padding:6px 9px"><div class="ailbl" style="font-size:9px">CITIZENSFOREX AI</div><div class="typing"><span></span><span></span><span></span></div></div>`;
   area.scrollTop = area.scrollHeight;
   const reply = await callAI(msg);
   const t = document.getElementById('full-typing');
-  if(t) t.innerHTML = `<div class="ai-label" style="font-size:10px">AI ANALYST</div><div style="line-height:1.6">${reply}</div>`;
+  if(t) t.innerHTML = `<div class="ailbl" style="font-size:9px">CITIZENSFOREX AI</div><div style="line-height:1.6">${reply}</div>`;
   area.scrollTop = area.scrollHeight;
 }
 
 // ── NAVIGATION ──
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn,.bnav-btn').forEach(b=>b.classList.remove('active'));
   const page = document.getElementById('page-'+id);
   if(page) page.classList.add('active');
   if(btn) btn.classList.add('active');
   if(id==='signals') loadSignals();
-  if(id==='news') {
-    if(!allNews.length) allNews = NEWS_FALLBACK;
-    renderFullNewsFeed();
-  }
+  if(id==='news') { allNews=NEWS_FALLBACK; renderFullNewsFeed(); loadNews(); }
   if(id==='analysis') loadAnalysis();
   if(id==='calendar') loadCalendar();
   if(id==='community') loadCommunity();
+}
+
+// ── VIX ──
+function updateVix() {
+  const vix = (12+Math.random()*8).toFixed(1);
+  const el = document.getElementById('vixVal');
+  if(el) { el.textContent=vix; el.style.color=vix>18?'var(--red)':vix>14?'var(--orange)':'var(--green)'; }
 }
 
 // ── INIT ──
 async function init() {
   updateClocks();
   buildTicker(null);
-  setTimeout(initMiniCharts, 100);
-
-  // Load fallback data IMMEDIATELY - no waiting
+  // Show all fallback data immediately
   allNews = NEWS_FALLBACK;
   renderNewsFeed();
-  renderFullNewsFeed();
   document.getElementById('news-count').textContent = allNews.length;
-  renderStrengthData(STRENGTH_FALLBACK);
+  loadStrength();
   renderHeatmap();
   updateFearGreed();
-  loadCalendar();
   loadMovers();
+  loadCalendar();
   loadSignals();
+  
 
-  // Then fetch live data in background
+  // Fetch live data
   updatePrices();
-  loadNews();
-  loadStrength();
+  setTimeout(loadNews, 500);
 
+  // Intervals
   setInterval(updateClocks, 1000);
-  setInterval(updatePrices, 5000);
-  setInterval(updateMiniCharts, 2000);
-  setInterval(renderHeatmap, 8000);
-  setInterval(updateFearGreed, 10000);
-  setInterval(loadStrength, 15000);
-  setInterval(loadMovers, 10000);
-  setInterval(loadNews, 60000);
+  setInterval(updateVix, 5000);
+  setInterval(async()=>{ await updatePrices(); renderHeatmap(); }, 5000);
+  setInterval(loadStrength, 20000);
+  setInterval(loadMovers, 15000);
+  setInterval(updateFearGreed, 12000);
+  setInterval(loadNews, 120000); // refresh news every 2 mins
+  setInterval(loadCalendar, 60000); // refresh calendar every 1 min
 }
 
 init();

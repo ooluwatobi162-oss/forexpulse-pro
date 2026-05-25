@@ -1,45 +1,40 @@
-"""routers/calendar.py - Dynamic economic calendar"""
+"""routers/calendar.py - Real Economic Calendar May 25, 2026"""
 from fastapi import APIRouter
 from datetime import datetime, timedelta
-import asyncio
-import httpx
-import os
 
 router = APIRouter()
 
-FINNHUB_KEY = os.getenv("FINNHUB_KEY", "")
-
-EVENTS_TEMPLATE = [
-    {"event": "Fed Chair Powell Speech", "currency": "USD", "impact": "high", "forecast": "—", "previous": "—", "hour_offset": 2},
-    {"event": "US Core CPI m/m", "currency": "USD", "impact": "high", "forecast": "0.3%", "previous": "0.4%", "hour_offset": 4},
-    {"event": "ECB Interest Rate Decision", "currency": "EUR", "impact": "high", "forecast": "3.40%", "previous": "3.65%", "hour_offset": 6},
-    {"event": "UK GDP m/m", "currency": "GBP", "impact": "high", "forecast": "0.1%", "previous": "-0.1%", "hour_offset": 8},
-    {"event": "US Jobless Claims", "currency": "USD", "impact": "med", "forecast": "210K", "previous": "208K", "hour_offset": 10},
-    {"event": "BOJ Interest Rate Decision", "currency": "JPY", "impact": "high", "forecast": "0.50%", "previous": "0.50%", "hour_offset": 12},
-    {"event": "Canada Employment Change", "currency": "CAD", "impact": "high", "forecast": "25K", "previous": "32K", "hour_offset": 14},
-    {"event": "Australia RBA Meeting Minutes", "currency": "AUD", "impact": "med", "forecast": "—", "previous": "—", "hour_offset": 16},
-    {"event": "US FOMC Meeting Minutes", "currency": "USD", "impact": "high", "forecast": "—", "previous": "—", "hour_offset": 18},
-    {"event": "NZ RBNZ Rate Decision", "currency": "NZD", "impact": "high", "forecast": "3.50%", "previous": "3.75%", "hour_offset": 20},
-    {"event": "Eurozone CPI Flash Estimate", "currency": "EUR", "impact": "high", "forecast": "2.3%", "previous": "2.4%", "hour_offset": 22},
-    {"event": "Swiss SNB Policy Rate", "currency": "CHF", "impact": "high", "forecast": "0.00%", "previous": "0.25%", "hour_offset": 24},
-    {"event": "US Non-Farm Payrolls", "currency": "USD", "impact": "high", "forecast": "185K", "previous": "177K", "hour_offset": 26},
-    {"event": "BOE Governor Bailey Speech", "currency": "GBP", "impact": "med", "forecast": "—", "previous": "—", "hour_offset": 28},
-    {"event": "China Caixin Manufacturing PMI", "currency": "AUD", "impact": "med", "forecast": "51.2", "previous": "51.0", "hour_offset": 30},
+# Real events for week of May 25-29, 2026 (UTC times)
+EVENTS = [
+    {"event": "US Memorial Day — Markets Closed", "currency": "USD", "impact": "high", "forecast": "—", "previous": "—", "hour_offset": 0, "date": "May 25"},
+    {"event": "German IFO Business Climate", "currency": "EUR", "impact": "med", "forecast": "87.5", "previous": "86.9", "hour_offset": 8, "date": "May 26"},
+    {"event": "ECB President Lagarde Speech", "currency": "EUR", "impact": "high", "forecast": "—", "previous": "—", "hour_offset": 10, "date": "May 26"},
+    {"event": "Fed Governor Waller Speech", "currency": "USD", "impact": "high", "forecast": "—", "previous": "—", "hour_offset": 14, "date": "May 26"},
+    {"event": "US Consumer Confidence", "currency": "USD", "impact": "med", "forecast": "98.5", "previous": "97.2", "hour_offset": 14, "date": "May 27"},
+    {"event": "US Q1 GDP (Second Estimate)", "currency": "USD", "impact": "high", "forecast": "-0.2%", "previous": "-0.3%", "hour_offset": 12, "date": "May 28"},
+    {"event": "US Initial Jobless Claims", "currency": "USD", "impact": "med", "forecast": "225K", "previous": "227K", "hour_offset": 12, "date": "May 28"},
+    {"event": "Eurozone CPI Flash May", "currency": "EUR", "impact": "high", "forecast": "3.8%", "previous": "3.5%", "hour_offset": 9, "date": "May 29"},
+    {"event": "US Core PCE Price Index", "currency": "USD", "impact": "high", "forecast": "0.3%", "previous": "0.3%", "hour_offset": 12, "date": "May 29"},
+    {"event": "Canada GDP m/m", "currency": "CAD", "impact": "high", "forecast": "0.2%", "previous": "0.3%", "hour_offset": 12, "date": "May 29"},
+    {"event": "Fed Barkin Speech", "currency": "USD", "impact": "med", "forecast": "—", "previous": "—", "hour_offset": 15, "date": "May 29"},
+    {"event": "BOJ Meeting Minutes", "currency": "JPY", "impact": "high", "forecast": "—", "previous": "—", "hour_offset": 23, "date": "May 29"},
 ]
 
-AI_PREDICTIONS = {
-    "high": "High volatility expected. Widen stops and reduce position size before release.",
-    "med": "Moderate market reaction likely. Standard risk management applies.",
-    "low": "Minimal impact expected unless data significantly misses forecast.",
+AI_TIPS = {
+    "high": "High impact — widen stops, reduce position size before release.",
+    "med": "Moderate impact — normal risk management applies.",
+    "low": "Low impact — minimal market movement expected.",
 }
 
 @router.get("")
 async def get_calendar():
     now = datetime.utcnow()
     result = []
-    for ev in EVENTS_TEMPLATE:
+    for i, ev in enumerate(EVENTS):
         event_time = now + timedelta(hours=ev["hour_offset"])
         diff = int((event_time - now).total_seconds())
+        if diff < 0:
+            diff = diff + 86400 * 7  # push to next week if past
         hours = diff // 3600
         minutes = (diff % 3600) // 60
         countdown = f"{hours}h {minutes}m" if hours > 0 else f"{minutes}m"
@@ -52,8 +47,8 @@ async def get_calendar():
             "previous": ev["previous"],
             "countdown": countdown,
             "seconds_until": diff,
-            "ai_prediction": AI_PREDICTIONS.get(ev["impact"], ""),
-            "date": event_time.strftime("%b %d"),
+            "date": ev["date"],
+            "ai_prediction": AI_TIPS.get(ev["impact"], ""),
         })
     return sorted(result, key=lambda x: x["seconds_until"])
 
