@@ -15,45 +15,85 @@ BASE_PRICES = {
 }
 
 SIGNALS = [
-    # USD/JPY BUY — USD recovering, JPY weakest today as Iran deal reduces safe-haven
-    {"pair":"USD/JPY","direction":"BUY","entry":159.404,"tp1":160.200,"tp2":161.500,"sl":158.500,
+    # XAU/USD SELL — Investing.com Strong Sell, RSI 44.12, resistance at 4580-4590 holding
+    {"pair":"XAU/USD","direction":"SELL","entry":4536.43,"tp1":4460.00,"tp2":4410.00,"sl":4585.00,
      "confidence":82,"risk_level":"MED",
-     "reasons":["JPY weakest G10 today as Iran deal reduces safe-haven demand","USD/JPY +0.48% today — bullish momentum","BOJ ultra-loose policy unchanged — 0.75% vs Fed 3.75%","Target 160.00 psychological resistance"]},
+     "reasons":[
+         "Investing.com Daily Signal: STRONG SELL on XAU/USD",
+         "RSI 44.12 — below 50, bearish momentum confirmed",
+         "Resistance at $4,580-$4,590 rejected twice — double top forming",
+         "US-Iran peace deal progress reducing safe-haven war premium"
+     ]},
 
-    # XAU/USD HOLD/WATCH — deal not confirmed, gold resilient
-    {"pair":"XAU/USD","direction":"BUY","entry":4558.82,"tp1":4610.00,"tp2":4680.00,"sl":4495.00,
-     "confidence":72,"risk_level":"MED",
-     "reasons":["Gold holding $4,558 despite Iran deal talk — resilient","Deal not fully confirmed — war premium remains","Support at $4,441 — strong floor","If deal fails, expect return to $4,577+ highs"]},
+    # GBP/USD BUY — recovering, USD weak on Iran deal
+    {"pair":"GBP/USD","direction":"BUY","entry":1.34980,"tp1":1.35650,"tp2":1.36300,"sl":1.34300,
+     "confidence":74,"risk_level":"LOW",
+     "reasons":[
+         "GBP/USD +0.12% today — reclaiming 1.3500 key level",
+         "USD soft on US-Iran deal hopes reducing safe-haven demand",
+         "US Consumer Confidence 17:00 UTC — beat = risk-on, GBP higher",
+         "GBP supported by BOE hawkish stance — rates held at 3.75%"
+     ]},
 
-    # USD/CAD BUY — oil -5% hurts CAD
-    {"pair":"USD/CAD","direction":"BUY","entry":1.38000,"tp1":1.38650,"tp2":1.39300,"sl":1.37400,
-     "confidence":78,"risk_level":"LOW",
-     "reasons":["Oil -5% on Strait of Hormuz reopening hopes = CAD bearish","USD recovering as Iran risk-off fades","USD/CAD bullish momentum — target 1.3865","Key support at 1.3740 — favorable risk/reward"]},
-
-    # EUR/USD SELL — EUR weak, USD recovering
-    {"pair":"EUR/USD","direction":"SELL","entry":1.15630,"tp1":1.15000,"tp2":1.14300,"sl":1.16200,
-     "confidence":76,"risk_level":"LOW",
-     "reasons":["EUR/USD -0.42% today on USD recovery","ECB may revise inflation higher — June cut less certain","Iran deal = USD recovery theme dominant","Key resistance at 1.1620 — short on rallies"]},
-
-    # GBP/USD SELL — GBP weak, UK retail data due Tuesday
-    {"pair":"GBP/USD","direction":"SELL","entry":1.33620,"tp1":1.33000,"tp2":1.32300,"sl":1.34200,
+    # AUD/USD BUY — strongest pair today +0.27%
+    {"pair":"AUD/USD","direction":"BUY","entry":0.71770,"tp1":0.72300,"tp2":0.72900,"sl":0.71200,
      "confidence":74,"risk_level":"MED",
-     "reasons":["GBP/USD -0.42% today — dollar recovery theme","UK BRC Shop Price Index due Tuesday — retail collapse risk","GBP below 1.3400 key support — bearish signal","US-Iran deal reducing GBP safe-haven premium"]},
+     "reasons":[
+         "AUD/USD strongest G10 today at +0.27%",
+         "Risk-on mood from Iran deal hopes supporting commodity currencies",
+         "AUD CPI Wednesday — hot print would boost AUD further",
+         "AUD rates at 4.10% — highest G10 carry — institutional buying"
+     ]},
 
-    # NZD/USD WATCH — RBNZ Wednesday
-    {"pair":"NZD/USD","direction":"SELL","entry":0.58060,"tp1":0.57500,"tp2":0.57000,"sl":0.58500,
-     "confidence":68,"risk_level":"HIGH",
-     "reasons":["RBNZ decision Wednesday — hold at 2.25% expected","USD recovery weighing on all commodity currencies","NZD/USD at 0.5806 — below key 0.5850 resistance","China PMI Sunday could add downward pressure"]},
-
-    # AUD/USD WATCH — China PMI risk Sunday
-    {"pair":"AUD/USD","direction":"SELL","entry":0.69430,"tp1":0.68800,"tp2":0.68200,"sl":0.70000,
+    # EUR/USD BUY — recovering from 1.1563 lows
+    {"pair":"EUR/USD","direction":"BUY","entry":1.16000,"tp1":1.16500,"tp2":1.17000,"sl":1.15500,
      "confidence":70,"risk_level":"MED",
-     "reasons":["AUD/USD at 0.6943 — China PMI Sunday is key risk","Oil -5% reduces Australia commodity export value","USD recovery capping AUD upside","AUD CPI Wednesday — could change direction"]},
+     "reasons":[
+         "EUR/USD recovering — bulls defending 1.1560 support",
+         "USD slipping as Iran deal reduces geopolitical risk premium",
+         "ECB may delay June cut if inflation revised higher on energy",
+         "Break above 1.1650 opens path to 1.1700+"
+     ]},
 
-    # GBP/JPY SELL — both GBP weak + JPY recovering slightly
-    {"pair":"GBP/JPY","direction":"SELL","entry":213.000,"tp1":211.500,"tp2":210.000,"sl":214.200,
-     "confidence":71,"risk_level":"HIGH",
-     "reasons":["GBP/JPY at 213.00 — near strong resistance zone","GBP weak on UK retail data concerns","If Iran deal confirmed, JPY may recover from oversold levels","Risk/reward 1.25:1 — manage risk carefully"]},
+    # USD/JPY SELL — JPY recovering, safe-haven demand returning slightly
+    {"pair":"USD/JPY","direction":"SELL","entry":158.730,"tp1":158.000,"tp2":157.200,"sl":159.400,
+     "confidence":68,"risk_level":"MED",
+     "reasons":[
+         "USD/JPY -0.10% today — JPY recovering slightly",
+         "Iran deal uncertainty keeping some safe-haven flows in JPY",
+         "Deutsche Bank forecasts USD/JPY at 150 by end 2026",
+         "BOJ watching 160 level — intervention risk if approached"
+     ]},
+
+    # USD/CAD NEUTRAL — oil stabilizing, CAD finding floor
+    {"pair":"USD/CAD","direction":"SELL","entry":1.38000,"tp1":1.37400,"tp2":1.36800,"sl":1.38600,
+     "confidence":66,"risk_level":"HIGH",
+     "reasons":[
+         "Oil stabilizing after yesterday's 5% Iran-driven crash",
+         "CAD finding floor after oversold move lower",
+         "Canadian employment data strong — CAD fundamentally supported",
+         "Risk-on mood broadly supportive of CAD"
+     ]},
+
+    # NZD/USD WATCH — RBNZ Wednesday is key
+    {"pair":"NZD/USD","direction":"BUY","entry":0.58200,"tp1":0.58800,"tp2":0.59400,"sl":0.57700,
+     "confidence":64,"risk_level":"HIGH",
+     "reasons":[
+         "RBNZ decision Wednesday — hold at 2.25% with hawkish tone expected",
+         "NZD/USD recovering with broader risk-on mood today",
+         "NZD rates at 2.15% vs USD 2.25% — narrowing differential supportive",
+         "Risk: China PMI Sunday could reset direction sharply"
+     ]},
+
+    # GBP/JPY BUY — GBP strong + JPY soft
+    {"pair":"GBP/JPY","direction":"BUY","entry":214.300,"tp1":215.500,"tp2":216.800,"sl":213.100,
+     "confidence":72,"risk_level":"MED",
+     "reasons":[
+         "GBP/JPY +0.21% today — dual driver of GBP strength + JPY weakness",
+         "BOE rates 3.75% vs BOJ 0.75% — massive carry differential",
+         "Risk-on mood pushing higher-yielding currencies vs JPY",
+         "Target 215.50 — previous resistance now acting as support"
+     ]},
 ]
 
 class SignalEngine:

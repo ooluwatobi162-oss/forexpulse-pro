@@ -14,13 +14,14 @@ _strength_cache = TTLCache(maxsize=10, ttl=120)
 
 CURRENCIES = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "NZD", "CHF"]
 
-# ✅ VERIFIED PRICES — May 25, 2026 (Yahoo Finance + CoinDesk + Investing.com)
-# Key theme: US-Iran deal "subject to finalization", oil -5%, USD recovering
+# ✅ VERIFIED PRICES — May 26, 2026
+# Sources: Google Finance, Investing.com, CoinDesk, MTFX
+# Key theme: Dollar slipping on US-Iran deal hopes. Gold Strong Sell (Investing.com)
 BASE_PRICES = {
-    "EUR/USD": 1.15630, "GBP/USD": 1.33620, "USD/JPY": 159.404,
-    "USD/CHF": 0.90000, "AUD/USD": 0.69430, "USD/CAD": 1.38000,
-    "NZD/USD": 0.58060, "EUR/GBP": 0.86510, "EUR/JPY": 184.277,
-    "GBP/JPY": 213.000, "XAU/USD": 4558.82, "BTC/USD": 77277,
+    "EUR/USD": 1.16000, "GBP/USD": 1.34980, "USD/JPY": 158.730,
+    "USD/CHF": 0.91200, "AUD/USD": 0.71770, "USD/CAD": 1.38000,
+    "NZD/USD": 0.58200, "EUR/GBP": 0.86190, "EUR/JPY": 185.038,
+    "GBP/JPY": 214.300, "XAU/USD": 4536.43, "BTC/USD": 77277,
 }
 
 _sim_prices = dict(BASE_PRICES)
