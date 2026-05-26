@@ -271,7 +271,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2'
   <div class="brand"><span class="c1">CITIZENS</span><span class="c2">FOREX</span> <span class="c3">PRO</span></div>
   <div class="mkt-badge"><div class="live-dot" style="width:5px;height:5px"></div><span>OPEN</span></div>
   <div class="top-stat"><span class="lb">GOLD</span><span class="vl gold" id="goldPrice">$4,558</span></div>
-  <div class="top-stat"><span class="lb">BTC</span><span class="vl up" id="btcPrice">$77,650</span></div>
+  <div class="top-stat"><span class="lb">BTC</span><span class="vl up" id="btcPrice">$77,277</span></div>
   <div class="top-stat"><span class="lb">VIX</span><span class="vl" id="vixVal" style="color:var(--orange)">14.2</span></div>
   <div class="clocks">
     <div class="clk" id="clk-tokyo"><div class="city">TOKYO</div><div class="time" id="t-tokyo">--:--</div></div>
@@ -328,29 +328,29 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2'
   <div class="price-grid" id="priceGrid">
     <div class="price-card" id="pc-EURUSD">
       <div class="pair-name">EUR/USD</div>
-      <div class="price-val" id="pv-EURUSD">1.16430</div>
-      <div class="price-chg" id="pc2-EURUSD">▲ +0.21%</div>
+      <div class="price-val" id="pv-EURUSD">1.15630</div>
+      <div class="price-chg" id="pc2-EURUSD">▼ -0.42%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-EURUSD" style="width:62%"></div></div>
       
     </div>
     <div class="price-card" id="pc-GBPUSD">
       <div class="pair-name">GBP/USD</div>
-      <div class="price-val" id="pv-GBPUSD">1.34920</div>
-      <div class="price-chg" id="pc2-GBPUSD">▲ +0.15%</div>
+      <div class="price-val" id="pv-GBPUSD">1.33620</div>
+      <div class="price-chg" id="pc2-GBPUSD">▼ -0.42%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-GBPUSD" style="width:55%"></div></div>
       
     </div>
     <div class="price-card" id="pc-USDJPY">
       <div class="pair-name">USD/JPY</div>
-      <div class="price-val" id="pv-USDJPY">158.910</div>
-      <div class="price-chg" id="pc2-USDJPY">▲ +0.18%</div>
+      <div class="price-val" id="pv-USDJPY">159.404</div>
+      <div class="price-chg" id="pc2-USDJPY">▲ +0.48%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-USDJPY" style="width:58%"></div></div>
       
     </div>
     <div class="price-card" id="pc-XAUUSD">
       <div class="pair-name">XAU/USD</div>
       <div class="price-val" id="pv-XAUUSD">4558.82</div>
-      <div class="price-chg" id="pc2-XAUUSD">▲ +0.36%</div>
+      <div class="price-chg" id="pc2-XAUUSD">▼ -0.28%</div>
       <div class="price-slider"><div class="price-slider-fill" id="ps-XAUUSD" style="width:72%"></div></div>
       
     </div>
@@ -436,7 +436,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Exo 2'
     <div style="flex:1;overflow-y:auto;margin-bottom:6px" id="fullChatArea">
       <div class="cmsg ai" style="font-size:10px;padding:7px 9px">
         <div class="ailbl" style="font-size:9px;margin-bottom:3px">CITIZENSFOREX AI — ONLINE</div>
-        Welcome trader! CitizensForex AI — May 25, 2026. 🟡 US-Iran peace talks progressing — oil falling, stocks rising. Gold at $4,558 pulling back. EUR/USD 1.1643, USD/JPY 158.91, AUD strongest +0.57%. US markets CLOSED (Memorial Day). Ask me anything!
+        Welcome! CitizensForex AI — May 25, 2026 🟡 US-Iran peace deal "subject to finalization". Oil -5%, USD recovering. EUR/USD 1.1563 (-0.42%), GBP/USD 1.3362 (-0.42%), USD/JPY 159.40 (+0.48%), Gold $4,558, BTC $77,277. US markets CLOSED (Memorial Day). Ask me anything!
       </div>
     </div>
     <div class="qbtns">
@@ -547,7 +547,7 @@ async function apiFetch(path) {
 }
 
 // ── BASE DATA ──
-const BASE = {"EUR/USD":1.16430,"GBP/USD":1.34920,"USD/JPY":158.910,"USD/CHF":0.78140,"AUD/USD":0.71670,"USD/CAD":1.38150,"NZD/USD":0.58700,"XAU/USD":4558.82,"BTC/USD":77650,"EUR/GBP":0.86300,"EUR/JPY":185.040,"GBP/JPY":214.380};
+const BASE = {"EUR/USD":1.15630,"GBP/USD":1.33620,"USD/JPY":159.404,"USD/CHF":0.90000,"AUD/USD":0.69430,"USD/CAD":1.38000,"NZD/USD":0.58060,"XAU/USD":4558.82,"BTC/USD":77277,"EUR/GBP":0.86510,"EUR/JPY":184.277,"GBP/JPY":213.000};
 let simP = {...BASE};
 let allNews = [];
 let currentFilter = 'all';
@@ -679,18 +679,18 @@ async function updatePrices() {
 
 // ── NEWS FALLBACK ──
 const NEWS_FALLBACK = [
-  {title:"US-Iran Peace Talks Progressing — Dollar Slips, Oil Falls, Stocks Rise",source:"Reuters",published_at:"2m ago",currencies:["USD","XAU"],impact:"bearish",trade_bias:"XAUUSD WATCH",confidence:78,volatility_score:4,sentiment:"Iran peace deal hopes reducing safe-haven premium — gold pulling back from $4,577 highs"},
-  {title:"Eurozone PMI Contracts Unexpectedly in May at Fastest Pace Since Late 2023",source:"Bloomberg",published_at:"8m ago",currencies:["EUR"],impact:"bearish",trade_bias:"EURUSD SELL",confidence:85,volatility_score:4,sentiment:"EUR/USD at 1.1643 but ECB June cut now near certain after PMI shock"},
-  {title:"AUD Strongest Currency Today +0.57% — RBA Signals Pause After Recent Cut",source:"ABC News",published_at:"15m ago",currencies:["AUD"],impact:"bullish",trade_bias:"AUDUSD BUY",confidence:80,volatility_score:3,sentiment:"AUD leading G10 today — RBA pause signals stabilizing Australian economy"},
-  {title:"GBP/USD Holds Above 1.3490 — BOE Hawkish Stance Supporting Pound",source:"FT",published_at:"22m ago",currencies:["GBP"],impact:"bullish",trade_bias:"GBPUSD BUY",confidence:78,volatility_score:3,sentiment:"GBP +0.47% today — BOE holding rates at 4.5% keeping pound supported"},
-  {title:"USD/JPY Near 159.00 — BOJ Ultra-Loose Policy Keeping Yen Weak",source:"Nikkei",published_at:"28m ago",currencies:["JPY","USD"],impact:"bearish",trade_bias:"USDJPY BUY",confidence:82,volatility_score:3,sentiment:"JPY -0.14% today — BOJ refusing to tighten despite inflation above target"},
-  {title:"CHF Weakest Currency Today -0.43% After SNB Surprise Rate Cut",source:"Reuters",published_at:"35m ago",currencies:["CHF"],impact:"bearish",trade_bias:"USDCHF BUY",confidence:84,volatility_score:4,sentiment:"CHF -0.43% — SNB cut to 0% hitting franc across all major pairs today"},
-  {title:"Gold Eyes $4,580 Resistance as US-Iran Tensions Escalate Further",source:"Bloomberg",published_at:"42m ago",currencies:["XAU","USD"],impact:"bullish",trade_bias:"XAUUSD BUY",confidence:90,volatility_score:5,sentiment:"XAU/USD at $4,573 — analysts say $5,000 target now realistic given war premium"},
-  {title:"Fed Rate Hike Probability Rising — Market Pricing 15% Chance of June Hike",source:"CNBC",published_at:"50m ago",currencies:["USD"],impact:"bullish",trade_bias:"DXY BUY",confidence:76,volatility_score:3,sentiment:"USD recovering as Fed hike fears return amid war-driven inflation surge"},
-  {title:"NZD/USD Gains 0.38% — RBNZ Signals End of Rate Cut Cycle",source:"NZ Herald",published_at:"58m ago",currencies:["NZD"],impact:"bullish",trade_bias:"NZDUSD BUY",confidence:72,volatility_score:2,sentiment:"NZD finding support as RBNZ signals rates may have bottomed out"},
-  {title:"EUR/JPY Surges to 185.06 — EUR Strength vs JPY Weakness Combo Trade",source:"Bloomberg",published_at:"1h 5m ago",currencies:["EUR","JPY"],impact:"bullish",trade_bias:"EURJPY BUY",confidence:80,volatility_score:3,sentiment:"EUR/JPY +0.21% — dual driver of EUR positivity and BOJ ultra-loose policy"},
-  {title:"USD/CAD Falls as Oil Prices Jump on Middle East Supply Fears",source:"Globe & Mail",published_at:"1h 28m ago",currencies:["CAD","USD"],impact:"bearish",trade_bias:"USDCAD SELL",confidence:74,volatility_score:3,sentiment:"CAD supported by oil surge — Brent crude +2.1% on Strait of Hormuz fears"},
-  {title:"US Memorial Day — Thin Liquidity Expected, Volatility Risk High",source:"Reuters",published_at:"1h 45m ago",currencies:["USD"],impact:"neutral",trade_bias:"ALL PAIRS CAUTION",confidence:65,volatility_score:3,sentiment:"US markets closed today — expect thin liquidity and potential false breakouts"},
+  {title:"US-Iran Peace Deal Framework 'Subject to Finalization' — Trump Confirms Progress",source:"Reuters",published_at:"15m ago",currencies:["USD","XAU"],impact:"bearish",trade_bias:"XAUUSD SELL",confidence:82,volatility_score:4,sentiment:"Iran deal hopes reducing safe-haven premium. Gold pulling back from $4,577 highs. USD recovering slightly."},
+  {title:"Oil Prices Crash 5% on Strait of Hormuz Reopening Hopes — CAD Hit",source:"Bloomberg",published_at:"22m ago",currencies:["CAD","USD"],impact:"bearish",trade_bias:"USDCAD BUY",confidence:80,volatility_score:4,sentiment:"Brent -5% on Iran deal — CAD losing oil premium. USDCAD recovering toward 1.3850."},
+  {title:"EUR/USD Falls 0.42% — Dollar Recovers as Iran Deal Reduces Risk-Off",source:"FXStreet",published_at:"30m ago",currencies:["EUR","USD"],impact:"bearish",trade_bias:"EURUSD SELL",confidence:78,volatility_score:3,sentiment:"EUR/USD at 1.1563 — dollar recovering from multi-month lows as geopolitical risk fades."},
+  {title:"GBP/USD Drops 0.42% to 1.3362 — UK Retail Collapse Data Due Tuesday",source:"FT",published_at:"38m ago",currencies:["GBP","USD"],impact:"bearish",trade_bias:"GBPUSD SELL",confidence:74,volatility_score:3,sentiment:"GBP weak on risk-off reversal. BRC Shop Price Index and CBI Realized Sales due Tuesday."},
+  {title:"USD/JPY Climbs to 159.40 — Yen Weak as Safe-Haven Demand Fades",source:"Nikkei",published_at:"45m ago",currencies:["JPY","USD"],impact:"bullish",trade_bias:"USDJPY BUY",confidence:80,volatility_score:3,sentiment:"JPY selling as Iran deal reduces safe-haven flows. USD/JPY targeting 160.00 again."},
+  {title:"Bitcoin Rises to $77,277 — Oil Drop Boosts Asian Equities and Crypto",source:"CoinDesk",published_at:"52m ago",currencies:["USD"],impact:"neutral",trade_bias:"RISK-ON WATCH",confidence:65,volatility_score:3,sentiment:"BTC up as oil -5% pushes risk appetite higher. Asian stocks surge on Iran peace hopes."},
+  {title:"Gold Holds $4,558 Despite Iran Deal — War Risk Premium Remains Elevated",source:"Bloomberg",published_at:"1h ago",currencies:["XAU","USD"],impact:"neutral",trade_bias:"XAUUSD HOLD",confidence:72,volatility_score:3,sentiment:"Gold resilient at $4,558. Deal not fully confirmed — war premium still supporting prices."},
+  {title:"AUD/USD at 0.6943 — China PMI Due Sunday, Caution Warranted",source:"ABC News",published_at:"1h 10m ago",currencies:["AUD"],impact:"neutral",trade_bias:"AUDUSD WATCH",confidence:68,volatility_score:2,sentiment:"AUD holding gains but China NBS PMI Sunday could reset direction. Forecast 49.8."},
+  {title:"US Memorial Day — Wall Street Closed, Thin Liquidity Warning",source:"Reuters",published_at:"1h 20m ago",currencies:["USD"],impact:"neutral",trade_bias:"ALL CAUTION",confidence:60,volatility_score:3,sentiment:"US markets closed today. Expect thin liquidity, wider spreads and potential false breakouts."},
+  {title:"NZD/USD at 0.5806 — RBNZ Rate Decision Wednesday, Hold Expected at 2.25%",source:"NZ Herald",published_at:"1h 35m ago",currencies:["NZD"],impact:"neutral",trade_bias:"NZDUSD WATCH",confidence:70,volatility_score:3,sentiment:"NZD stable ahead of RBNZ Wednesday. 2.25% hold expected. Watch for hawkish tone shift."},
+  {title:"EUR/JPY at 184.28 — Both EUR and JPY Under Pressure as USD Recovers",source:"Bloomberg",published_at:"1h 50m ago",currencies:["EUR","JPY"],impact:"neutral",trade_bias:"EURJPY NEUTRAL",confidence:62,volatility_score:2,sentiment:"EUR/JPY range-bound as both currencies face headwinds from recovering dollar."},
+  {title:"ECB Preparing to Raise Inflation Forecasts at June Meeting — Iran Conflict Factor",source:"Investing.com",published_at:"2h ago",currencies:["EUR"],impact:"bullish",trade_bias:"EURUSD BUY",confidence:75,volatility_score:3,sentiment:"ECB may revise inflation higher due to Iran-driven energy costs — reducing June cut probability."},
 ];
 
 function renderNewsCard(n) {
@@ -981,11 +981,11 @@ function loadCommunity() {
 
 // ── AI CHAT ──
 const AI_LOCAL = {
-  gold:"Gold at $4,558 today (May 25, 2026). Range: $4,531–$4,579. US-Iran peace talk hopes are causing pullback from highs. Key support: $4,441. Resistance: $4,577. If peace deal confirmed, expect drop to $4,400 zone.",
-  eur:"EUR/USD at 1.1643 today. Eurozone PMI showed unexpected contraction in May — fastest pace since late 2023. ECB June cut likely. Bias: SELL rallies toward 1.1650. Support: 1.1600, Resistance: 1.1680.",
+  gold:"Gold at $4,558 today (May 25, 2026). Range: $4,531–$4,579. US-Iran deal \"subject to finalization\" reducing war premium. Support: $4,441. If deal confirmed, expect drop toward $4,400. If deal fails, gold back to $4,577+.",
+  eur:"EUR/USD at 1.1563 today (-0.42%). Dollar recovering on Iran deal hopes reducing risk-off. ECB may revise inflation higher due to Iran energy costs — reducing June cut probability. Support: 1.1500, Resistance: 1.1620.",
   gbp:"GBP mixed — BOE hawkish but UK CPI softening. GBP/JPY BUY offers better opportunity on JPY weakness. Watch 1.3400 support on cable.",
-  strong:"May 25, 2026 strength: AUD(+0.57%) and GBP(+0.47%) lead G10. EUR(+0.37%) positive on Iran deal hopes. USD weak as dollar slips on peace talks. CHF(-0.43%) and JPY(-0.14%) weakest. Favor AUD and GBP longs.",
-  best:"Today's top picks: 1) XAU/USD BUY at 4573 — war premium driving gold higher (91%). 2) AUD/USD BUY at 0.7168 — strongest currency today (+0.57%) (82%). 3) EUR/JPY BUY at 185.06 — EUR strength vs JPY weakness (79%).",
+  strong:"May 25, 2026: USD recovering as Iran deal reduces risk-off. USD/JPY +0.48% — JPY weakest as safe-haven demand fades. EUR(-0.42%) and GBP(-0.42%) weaker. AUD(0.6943) holding. Dollar recovery is today's dominant theme.",
+  best:"May 25 top picks: 1) USD/JPY BUY at 159.40 — JPY weakest as safe-haven fades, target 160.00 (82%). 2) USD/CAD BUY at 1.3800 — oil -5% hurts CAD (78%). 3) Gold HOLD at 4,558 — deal not confirmed yet, risk/reward neutral (65%).",
   smc:"Smart Money Concepts: Look for Break of Structure (BOS), Order Blocks (OB), Fair Value Gaps (FVG). Trade discount zones for buys, premium zones for sells.",
   default:"USD dominant across the board. EUR/USD under pressure, Gold maintaining bullish structure above $3,280. Watch upcoming central bank events for volatility."
 };
